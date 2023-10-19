@@ -1,0 +1,341 @@
+#my-css a {
+  text-decoration: none;
+}
+#my-css p {
+  margin: 0;
+}
+#my-css table {
+  margin: 0;
+}
+#my-css cite {
+  font-style: normal;
+}
+#my-css .d-flex-edit {
+  display: flex;
+}
+#my-css .text-hot {
+  color: red;
+}
+#my-css .max-width-main {
+  max-width: 1000px;
+}
+#my-css .hover-t-decoration:hover {
+  text-decoration: underline !important;
+}
+#my-css .pl-item {
+  padding-left: 3px;
+}
+#my-css .header {
+  background-color: #2C7ABE;
+}
+#my-css .header nav .mx-nav-negative {
+  margin-left: -12px;
+  margin-right: -12px;
+}
+#my-css .header nav p {
+  margin: 0;
+}
+#my-css .header nav a {
+  text-decoration: none;
+}
+#my-css .header nav .img {
+  width: 35px;
+  height: 35px;
+  margin-right: 5px;
+}
+#my-css .header nav h1 {
+  font-size: 18px;
+  margin: 0;
+}
+#my-css .header nav .title-main-hover:hover h1 * {
+  text-decoration: underline;
+}
+#my-css .header nav .item-main-hover:hover {
+  text-decoration: underline;
+}
+#my-css .header nav table {
+  display: none;
+  z-index: 1;
+}
+#my-css .header nav input {
+  height: 35px;
+  border: 0;
+  border-radius: 1px;
+}
+#my-css .header nav button {
+  width: 35px;
+  height: 35px;
+  border: 0;
+  border-radius: 1px;
+}
+#my-css .header nav .p-item-main {
+  padding: 7px 12px;
+}
+#my-css .header nav .ml-sub-item {
+  margin-left: 3px;
+}
+#my-css .header nav .color-main-list {
+  color: white;
+}
+#my-css .header nav .w-table {
+  width: 310px;
+}
+#my-css .header nav .hover-show:hover table {
+  display: table;
+}
+#my-css .header nav .bg-upload {
+  background-color: red;
+}
+#my-css .header nav .item {
+  color: black;
+}
+#my-css .header nav .item-sub-hover:hover {
+  background-color: rgb(235, 235, 235);
+}
+#my-css .header nav .log-in-hover:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+#my-css .content {
+  background-color: #EEEEEE;
+}
+#my-css .content .mh-content-negative {
+  margin-left: -10px;
+  margin-right: -10px;
+}
+#my-css .content .m-content {
+  margin: 20px 10px 0;
+}
+#my-css .content main section .grid-novel {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  padding: 10px;
+}
+#my-css .content main section .grid-novel img {
+  width: 100%;
+  height: auto;
+}
+#my-css .content main section .grid-novel a {
+  line-height: 1.25;
+  font-size: 14px;
+}
+#my-css .content main section .grid-novel p {
+  font-size: 13px;
+}
+#my-css .content main section .grid-novel .bg-black-opacity {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+#my-css .content main section .size-icon {
+  font-size: 70px;
+}
+#my-css .content main section .p-above {
+  padding: 5px 10px;
+}
+#my-css .content aside .type-novel td {
+  border-width: 0;
+}
+#my-css .content aside .review-novel .p-short-novel {
+  padding: 10px;
+}
+#my-css .content aside .review-novel img {
+  width: 48px;
+  height: auto;
+  margin-right: 10px;
+}
+#my-css .content aside .review-novel a {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  font-size: 14px;
+}
+#my-css .content aside .top-list .rank {
+  text-align: center;
+  vertical-align: middle;
+  font-size: 25px;
+  font-weight: 300;
+  width: 50px;
+}
+#my-css .content aside .top-list .text-r-1 {
+  color: red;
+}
+#my-css .content aside .top-list .text-r-2 {
+  color: #3a833c;
+}
+#my-css .content aside .top-list .text-r-3 {
+  color: #8f6b00;
+}
+#my-css .content aside .top-list .text-under-r-3 {
+  color: #2980b9;
+}
+#my-css .content aside .top-list td {
+  border-style: dashed;
+  vertical-align: middle;
+  padding: 2px 0 5px;
+}
+#my-css .content aside .top-list td a {
+  font-size: 14px;
+  font-weight: 600;
+}
+#my-css .content aside .top-list td .view {
+  font-size: 12px;
+}
+#my-css .content aside .top-list td .view i {
+  padding-right: 3px;
+}
+#my-css .content section {
+  margin-bottom: 10px;
+}
+#my-css .content section h2 {
+  color: #2F52B2;
+  font-size: 20px;
+  padding: 5px 10px;
+  border-bottom: 1px solid #DDDDDD;
+  margin: 0;
+}
+#my-css .content section img {
+  width: 100%;
+  height: auto;
+}
+#my-css .content section .container-type-novel {
+  border-bottom: 1px dashed #DDDDDD;
+  font-size: 12px;
+}
+#my-css .content section .container-type-novel a {
+  text-decoration: none;
+  background-color: grey;
+  border-radius: 2px;
+  padding: 3px 6px;
+  margin: 5px;
+}
+#my-css .content section .container-novel {
+  padding: 10px;
+}
+#my-css .content section .container-novel .container-infor-novel {
+  text-align: center;
+  padding: 5px 10px 0;
+}
+#my-css .content section .container-novel .container-infor-novel a {
+  font-weight: 600;
+  text-decoration: none;
+  line-height: 1.25;
+}
+#my-css .content section .container-novel .container-infor-novel p {
+  font-size: 13px;
+  margin: 0;
+}
+#my-css .content section .pill {
+  background-color: grey;
+  width: 140px;
+  height: 30px;
+  border-radius: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+#my-css .content section .pill p {
+  padding-right: 5px;
+}
+#my-css .content section .td-secondary {
+  width: 100px;
+  text-align: right;
+}
+#my-css .content section .size-text-secondary {
+  font-size: 13px;
+}
+#my-css .content section .table-update-novel td {
+  border-style: dashed;
+}
+#my-css .content section .table-update-novel td .title-novel-update {
+  padding-right: 10px;
+  font-weight: 600;
+}
+#my-css .content section .table-update-novel td .note {
+  padding: 0 3px;
+  border: 1px solid red;
+}
+#my-css .content section .pb-shorts-novel {
+  padding-bottom: 5px;
+}
+#my-css .content section .right-novel {
+  margin-bottom: -5px;
+  padding: 0 5px 0 10px;
+  font-size: 14px;
+}
+#my-css .content section .right-novel .pb-short-novel {
+  padding-bottom: 5px;
+}
+#my-css .content section .right-novel img {
+  width: 80px;
+  height: auto;
+  padding-right: 10px;
+}
+#my-css .content section .right-novel a {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+#my-css .footer {
+  background-color: #333333;
+}
+#my-css .footer .p-top-novel-month {
+  padding: 15px 20px;
+}
+#my-css .footer .h2 {
+  font-size: 20px;
+}
+#my-css .footer .pv-description {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+#my-css .footer .text-link {
+  color: #016EB2;
+}
+#my-css .footer .top-novel {
+  color: #AAAAAA;
+  margin-right: 5px;
+}
+#my-css .footer .pr-logo {
+  padding-right: 5px;
+}
+@media (max-width: 860px) {
+  #my-css .max-860-w-full {
+    width: 100%;
+  }
+  #my-css .cols-novel > * {
+    width: 20%;
+  }
+}
+@media (max-width: 778px) {
+  #my-css .max-778-none {
+    display: none;
+  }
+  #my-css .cols-novel > * {
+    width: 25%;
+  }
+}
+@media (max-width: 628px) {
+  #my-css .cols-novel > * {
+    width: 33.33333333%;
+  }
+}
+@media (max-width: 476px) {
+  #my-css .cols-novel > * {
+    width: 50%;
+  }
+}
+@media (max-width: 460px) {
+  #my-css .max-460-none {
+    display: none;
+  }
+}
+@media (max-width: 324px) {
+  #my-css .cols-novel > * {
+    width: 100%;
+  }
+  #my-css .col-short-novel > * {
+    width: 100%;
+  }
+  #my-css .content section .right-novel {
+    padding: 5px 5px 0;
+  }
+}/*# sourceMappingURL=App.css.map */

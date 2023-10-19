@@ -1,0 +1,6 @@
+gõ lệnh npm init --yes để tạo trình quản lí packge node module
+nếu muốn dùng lệnh import thay vì require có sưnz tròn node thid chuyển duôi js thành mjs để node hiểu đó là 1 module hoặc thêm 
+"type": "module" vào package.json.
+
+//useLoaderData, useParams
+npm install --save tengoi
