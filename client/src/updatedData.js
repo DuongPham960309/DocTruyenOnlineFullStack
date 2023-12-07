@@ -124,7 +124,14 @@ const propsTrendNovelsInMonth = () => {
 
 let count = 1;//create to check update data, it will be delete when app is deployed
 const requestData = () => {
-    fetch("http://localhost:4000/data")
+    fetch("http://localhost:4000/data", {
+        method:'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(window.lastUpdatedTime)
+    })
     .then(response => response.json())
     .then(json => {
         let updatedTime = json.lastUpdatedTime;
@@ -166,6 +173,10 @@ const propsFunction = {
 
     for (let section in json.lastUpdatedTime) {
         propsFunction[section](section);
+    }
+
+    for (let section in json.lastUpdatedTime) {//create to check update data, it will be delete when app is deployed
+        json.lastUpdatedTime[section] = json.lastUpdatedTime[section] + (++count);
     }
 
     window.lastUpdatedTime = json.lastUpdatedTime;
