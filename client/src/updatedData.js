@@ -69,6 +69,34 @@ const propsShowNovels = (name) => {
 const propsUpdatedNovels = () => {
     window.tempData.updatedNovels.forEach(titleNovel_);
 
+    let currentTime = new Date("2023-11-11T09:00:00Z");
+    let updatedNovels = window.tempData.updatedNovels;
+
+    for (let i = 0; i < updatedNovels.length; i++)
+    {
+        let lastTime = new Date(updatedNovels[i].last_time);
+        let millisecondsDelta = currentTime.getTime() - lastTime.getTime();
+        let time = Math.floor(millisecondsDelta/86400000);
+
+        if (time > 0) {
+            updatedNovels[i].time = time + " ngày trước";
+        } else {
+            time = Math.floor(millisecondsDelta/3600000);
+
+            if (time > 0) {
+                updatedNovels[i].time = time + " giờ trước";
+            } else {
+                time = Math.floor(millisecondsDelta/60000);
+
+                if (time > 0) {
+                    updatedNovels[i].time = time + " phút trước";
+                } else {
+                    updatedNovels[i].time = "mới cập nhật";
+                }
+            }
+        }
+    }
+
     window.data.updatedNovels = window.tempData.updatedNovels;
 }
 

@@ -22,7 +22,6 @@ app.get('/data', (req, res) => {
         let rows, fields;
         let queriedData = {lastUpdatedTime: {}, data: {}};
 
-        
         [rows, fields] = await promiseConn.query("SELECT * FROM last_updated_time");
 
         for (let i = 0; i < rows.length; i++)
