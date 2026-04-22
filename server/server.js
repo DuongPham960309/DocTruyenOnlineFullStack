@@ -1,157 +1,130 @@
 import express from 'express';
-import cros from 'cors';
+import cors from 'cors';
 import mysql from 'mysql2/promise';
+import 'dotenv/config';
+import rateLimit from 'express-rate-limit';
 
 const app = express();
+const env = process.env;
 
 const pool = mysql.createPool({
-    host: "localhost",
-    port: 3306,
-    user: "root",
-    password: "123456",
-    database: "doc_truyen_online",
-    connectionLimit: 2
+    host: env.MYSQL_HOST,
+    port: env.MYSQL_PORT,
+    user: env.MYSQL_USER,
+    password: env.MYSQL_PASSWORD,
+    database: env.MYSQL_DATABASE,
+    connectionLimit: 10
 });
 
-app.use(cros(), express.json());
+const queryString = {
+    suggestedNovels: `SELECT novels.name, novels.before, novels.after, novels.image, suggested_novels.chapter FROM suggested_novels JOIN 
+    novels ON suggested_novels.name = novels.name ORDER BY id`,
+    selectedTranslationNovels: `SELECT novels.name, novels.before, novels.after, novels.image, selected_translation_novels.chapter FROM 
+    selected_translation_novels JOIN novels ON selected_translation_novels.name = novels.name ORDER BY id`,
+    updatedNovels: `SELECT name, novels.before, after, note, current_chapter AS chapter, last_time FROM novels WHERE first_time != last_time 
+    ORDER BY last_time DESC LIMIT 25`,
+    fullNovels: `SELECT novels.name, novels.before, novels.after, novels.image, novels.current_chapter AS chapter FROM full_novels JOIN 
+    novels ON full_novels.name = novels.name ORDER BY id`,
+    leftOfShortNovel: `SELECT image, title FROM short_novels WHERE short_novels.group = 'leftOfShortNovel'`,
+    rightOfShortNovels: `SELECT image, title FROM short_novels WHERE short_novels.group = 'rightOfShortNovels' ORDER BY id`,
+    reviewNovels: `SELECT image, title FROM review_novels ORDER BY id`,
+    topGoodNovels: `SELECT name AS title, view FROM novels ORDER BY view DESC LIMIT 10`,
+    newUpdateNovels: `SELECT name AS title, view FROM novels WHERE first_time = last_time ORDER BY first_time DESC LIMIT 10`,
+    trendNovelsInMonth: `SELECT name FROM trend_novels_in_month ORDER BY id`
+};
 
-app.get('/data',async (req, res) => {
-    const conn = await pool.getConnection();
-    let rows, fields;
-    let queriedData = {lastUpdatedTime: {}, data: {}};
+const sectionNames = Object.keys(queryString);
 
-    [rows, fields] = await conn.query("SELECT * FROM last_updated_time");
+app.set('trust proxy', 1);
 
-    for (let i = 0; i < rows.length; i++)
-    {
-        queriedData.lastUpdatedTime[rows[i].section] = rows[i].time;
-    }
+app.use(cors({
+    origin: "http://localhost:3000"
+}));
 
-    [rows, fields] = await conn.query(`SELECT novels.name, novels.before, novels.after, novels.image, suggested_novels.chapter 
-    FROM suggested_novels JOIN novels ON suggested_novels.name = novels.name ORDER BY id`);
-    queriedData.data.suggestedNovels = rows;
+app.use(rateLimit({
+    windowMs: 15*60*1000,
+    max: 500,
+    message: "Quá nhiều yêu cầu từ IP này, vui lòng thử lại sau 1 phút.",
+    standardHeaders: true,
+    legacyHeaders: false
+}));
 
-    [rows, fields] = await conn.query(`SELECT novels.name, novels.before, novels.after, novels.image, 
-    selected_translation_novels.chapter FROM selected_translation_novels JOIN novels ON selected_translation_novels.name = novels.name 
-    ORDER BY id`);
-    queriedData.data.selectedTranslationNovels = rows;
+app.use(express.json());
 
-    [rows, fields] = await conn.query(`SELECT name, novels.before, after, note, current_chapter AS chapter, last_time FROM novels 
-    WHERE first_time != last_time ORDER BY last_time DESC LIMIT 25`);
-    queriedData.data.updatedNovels = rows;
+//WebAssembly (.wasm)
 
-    [rows, fields] = await conn.query(`SELECT novels.name, novels.before, novels.after, novels.image, novels.current_chapter AS 
-    chapter FROM full_novels JOIN novels ON full_novels.name = novels.name ORDER BY id`);
-    queriedData.data.fullNovels = rows;
+app.get('/data', async (req, res) => {
+    const queriedData = {lastUpdatedTime: {}, data: {}};
+    const data = queriedData.data;
 
-    [rows, fields] = await conn.query("SELECT image, title FROM short_novels WHERE short_novels.group = 'leftOfShortNovel'");
-    queriedData.data.leftOfShortNovel = rows[0];
+    await getLastUpdatedTime(queriedData.lastUpdatedTime);
+    await Promise.all(sectionNames.map(sectionName => queryOfGetMethod(data, sectionName)));
 
-    [rows, fields] = await conn.query(`SELECT image, title FROM short_novels WHERE short_novels.group = 'rightOfShortNovels' ORDER 
-    BY id`);
-    queriedData.data.rightOfShortNovels = rows;
+    data.leftOfShortNovel = data.leftOfShortNovel[0];
+    data.trendNovelsInMonth = data.trendNovelsInMonth.map(row => row.name);
 
-    [rows, fields] = await conn.query("SELECT image, title FROM review_novels ORDER BY id");
-    queriedData.data.reviewNovels = rows;
-
-    [rows, fields] = await conn.query("SELECT name AS title, view FROM novels ORDER BY view DESC LIMIT 10");
-    queriedData.data.topGoodNovels = rows;
-
-    [rows, fields] = await conn.query(`SELECT name AS title, view FROM novels WHERE first_time = last_time ORDER BY first_time 
-    DESC LIMIT 10`);
-    queriedData.data.newUpdateNovels = rows;
-
-    [rows, fields] = await conn.query("SELECT name FROM trend_novels_in_month ORDER BY id");
-    queriedData.data.trendNovelsInMonth = [];
-
-    for (let i = 0; i < rows.length; i++)
-    {
-        queriedData.data.trendNovelsInMonth.push(rows[i].name);
-    }
-
-    conn.release();
-    const data = JSON.stringify(queriedData);
-    res.send(data);
+    res.json(queriedData);
 });
 
-app.post('/data',async (req, res) => {
-    const conn = await pool.getConnection();
-    let rows, fields;
-    let queriedData = {lastUpdatedTime: {}, data: {}};
+const getLastUpdatedTime = async (lastUpdatedTime) => {
+    try {
+        let rows;
 
-    [rows, fields] = await conn.query("SELECT * FROM last_updated_time");
-
-    for (let i = 0; i < rows.length; i++) {
-        queriedData.lastUpdatedTime[rows[i].section] = rows[i].time;
+        [rows] = await pool.query(`SELECT * FROM last_updated_time`);
+    
+        for (let i = 0; i < rows.length; i++)
+        {
+            lastUpdatedTime[rows[i].section] = rows[i].time;
+        }
+    } catch (error) {
+        console.error(`\x1b[31m lastUpdatedTime: ${error}\x1b[0m`);
     }
+}
 
-    let updatedTime = req.body;
+const queryOfGetMethod = async (data, property) => {
+    try {
+        [data[property]] = await pool.query(queryString[property]);
+    } catch (error) {
+        console.error(`\x1b[31m ${property}: ${error}\x1b[0m`);
+    }
+}
+
+app.post('/data', async (req, res) => {
+    let {secretKey, updatedTime} = req.body;
+
+    console.log(secretKey);
+
+    const queriedData = {lastUpdatedTime: {}, data: {}};
+    const data = queriedData.data;
     let lastUpdatedTime = queriedData.lastUpdatedTime;
 
-    if (updatedTime.suggestedNovels !== lastUpdatedTime.suggestedNovels) {
-        [rows, fields] = await conn.query(`SELECT novels.name, novels.before, novels.after, novels.image, suggested_novels.chapter 
-        FROM suggested_novels JOIN novels ON suggested_novels.name = novels.name ORDER BY id`);
-        queriedData.data.suggestedNovels = rows;
-    }
-
-    if (updatedTime.selectedTranslationNovels !== lastUpdatedTime.selectedTranslationNovels) {
-        [rows, fields] = await conn.query(`SELECT novels.name, novels.before, novels.after, novels.image, 
-        selected_translation_novels.chapter FROM selected_translation_novels JOIN novels ON selected_translation_novels.name = novels.name 
-        ORDER BY id`);
-        queriedData.data.selectedTranslationNovels = rows;
-    }
-
-    if (updatedTime.updatedNovels !== lastUpdatedTime.updatedNovels) {
-        [rows, fields] = await conn.query(`SELECT name, novels.before, after, note, current_chapter AS chapter, last_time FROM 
-        novels WHERE first_time != last_time ORDER BY last_time DESC LIMIT 25`);
-        queriedData.data.updatedNovels = rows;
-    }
-
-    if (updatedTime.fullNovels !== lastUpdatedTime.fullNovels) {
-        [rows, fields] = await conn.query(`SELECT novels.name, novels.before, novels.after, novels.image, novels.current_chapter AS 
-        chapter FROM full_novels JOIN novels ON full_novels.name = novels.name ORDER BY id`);
-        queriedData.data.fullNovels = rows;
-    }
+    await getLastUpdatedTime(queriedData.lastUpdatedTime);
+    await Promise.allSettled(sectionNames.map(sectionName => queryOfPostMethod(updatedTime, sectionName, queriedData)));
 
     if (updatedTime.leftOfShortNovel !== lastUpdatedTime.leftOfShortNovel) {
-        [rows, fields] = await conn.query("SELECT image, title FROM short_novels WHERE short_novels.group = 'leftOfShortNovel'");
-        queriedData.data.leftOfShortNovel = rows[0];
-    }
-
-    if (updatedTime.rightOfShortNovels !== lastUpdatedTime.rightOfShortNovels) {
-        [rows, fields] = await conn.query(`SELECT image, title FROM short_novels WHERE short_novels.group = 'rightOfShortNovels' 
-        ORDER BY id`);
-        queriedData.data.rightOfShortNovels = rows;
-    }
-
-    if (updatedTime.reviewNovels !== lastUpdatedTime.reviewNovels) {
-        [rows, fields] = await conn.query("SELECT image, title FROM review_novels ORDER BY id");
-        queriedData.data.reviewNovels = rows;
-    }
-
-    if (updatedTime.topGoodNovels !== lastUpdatedTime.topGoodNovels) {
-        [rows, fields] = await conn.query("SELECT name AS title, view FROM novels ORDER BY view DESC LIMIT 10");
-        queriedData.data.topGoodNovels = rows;
-    }
-
-    if (updatedTime.newUpdateNovels !== lastUpdatedTime.newUpdateNovels) {
-        [rows, fields] = await conn.query(`SELECT name AS title, view FROM novels WHERE first_time = last_time ORDER BY first_time 
-        DESC LIMIT 10`);
-        queriedData.data.newUpdateNovels = rows;
+        data.leftOfShortNovel = data.leftOfShortNovel[0];
     }
 
     if (updatedTime.trendNovelsInMonth !== lastUpdatedTime.trendNovelsInMonth) {
-        [rows, fields] = await conn.query("SELECT name FROM trend_novels_in_month ORDER BY id");
-        queriedData.data.trendNovelsInMonth = [];
-
-        for (let i = 0; i < rows.length; i++) {
-            queriedData.data.trendNovelsInMonth.push(rows[i].name);
-        }
+        data.trendNovelsInMonth = data.trendNovelsInMonth.map(row => row.name);
     }
 
-    conn.release();
-    const data = JSON.stringify(queriedData);
-    res.send(data);
+    res.json(queriedData);
 });
 
-app.listen(4000, () => {});
+const queryOfPostMethod = async (updatedTime, property, queriedData) => {
+    if (updatedTime[property] !== queriedData.lastUpdatedTime[property]) {
+        try {
+            [queriedData.data[property]] = await pool.query(queryString[property]);
+        } catch (error) {
+            console.error(`\x1b[31m ${property}: ${error}\x1b[0m`);
+            queriedData.lastUpdatedTime[property] = updatedTime[property];
+        }
+    }
+}
+
+app.listen(env.SERVER_PORT, env.SERVER_HOST, () => {
+    console.log(`\x1b[32m Server started on ${env.SERVER_HOST}:${env.SERVER_PORT}\x1b[0m`);
+}).on('error', (error) => {
+    console.error(`\x1b[31m Server failed: ${error.message}\x1b[0m`);
+});

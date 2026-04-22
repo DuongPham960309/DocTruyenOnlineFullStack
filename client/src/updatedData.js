@@ -25,6 +25,28 @@ window.setLastUpdatedTime = {
     reviewNovels: "", topGoodNovels: "", newUpdateNovels: "", trendNovelsInMonth: ""
 };
 
+const readWasm = (url, importObject = {}) => {
+    return WebAssembly.instantiateStreaming(fetch(url), importObject)
+        .then(result => result.instance.exports)
+}
+
+const wasmExports = await readWasm("/SecretKey.wasm");
+
+const getSecretKey = () => {
+    const pointerCreateSecretKey = wasmExports.createSecretKey();
+    
+    return convertToText(wasmExports, pointerCreateSecretKey);
+}
+
+const convertToText = (wasmExports, pointer) => {
+    const heap = new Uint8Array(wasmExports.memory.buffer);
+    let end = pointer;
+    
+    for (; heap[end] !== 0; end++);
+    
+    return new TextDecoder("utf-8").decode(heap.subarray(pointer, end));
+}
+
 export const useUpdate = name => {
     let setUpdatedTime = useState(window.lastUpdatedTime[name])[1];
     let setUp = useRef(false);
@@ -158,7 +180,7 @@ const requestData = () => {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(window.lastUpdatedTime)
+        body: JSON.stringify({secretKey: getSecretKey(), updatedTime: window.lastUpdatedTime})
     })
     .then(response => response.json())
     .then(json => {
