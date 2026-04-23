@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import loadSecretKey from "./wasm/SecretKey.js";
 
 //check the existence of window.data, if window.data exists, it will be renamed, this codes will be deleted when web is deployed
 //kiểm tra sự tồn tại của window.data, nếu window.data tồn tại, nó sẽ được đổi tên, đoạn code này sẽ được xóa khi web được triển khai
@@ -25,26 +26,10 @@ window.setLastUpdatedTime = {
     reviewNovels: "", topGoodNovels: "", newUpdateNovels: "", trendNovelsInMonth: ""
 };
 
-const readWasm = (url, importObject = {}) => {
-    return WebAssembly.instantiateStreaming(fetch(url), importObject)
-        .then(result => result.instance.exports)
-}
+const secretKeyInstance = await loadSecretKey();
 
-const wasmExports = await readWasm("/SecretKey.wasm");
-
-const getSecretKey = () => {
-    const pointerCreateSecretKey = wasmExports.createSecretKey();
-    
-    return convertToText(wasmExports, pointerCreateSecretKey);
-}
-
-const convertToText = (wasmExports, pointer) => {
-    const heap = new Uint8Array(wasmExports.memory.buffer);
-    let end = pointer;
-    
-    for (; heap[end] !== 0; end++);
-    
-    return new TextDecoder("utf-8").decode(heap.subarray(pointer, end));
+const getKey = () => {
+    return secretKeyInstance.UTF8ToString(secretKeyInstance._createSecretKey());
 }
 
 export const useUpdate = name => {
@@ -178,9 +163,10 @@ const requestData = () => {
         method:'POST',
         headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'x-key': getKey()
         },
-        body: JSON.stringify({secretKey: getSecretKey(), updatedTime: window.lastUpdatedTime})
+        body: JSON.stringify(window.lastUpdatedTime)
     })
     .then(response => response.json())
     .then(json => {
@@ -214,6 +200,7 @@ const propsFunction = {
 {
     let request = new XMLHttpRequest();
     request.open("GET", "http://localhost:4000/data", false);//data.json is located in public folder
+    request.setRequestHeader('x-key', getKey());
     request.send();
 
     let text = request.responseText;

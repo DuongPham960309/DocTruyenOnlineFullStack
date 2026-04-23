@@ -3,6 +3,7 @@ import cors from 'cors';
 import mysql from 'mysql2/promise';
 import 'dotenv/config';
 import rateLimit from 'express-rate-limit';
+import crypto from 'crypto';
 
 const app = express();
 const env = process.env;
@@ -41,6 +42,8 @@ app.use(cors({
     origin: "http://localhost:3000"
 }));
 
+app.use(verifyRequest);
+
 app.use(rateLimit({
     windowMs: 15*60*1000,
     max: 500,
@@ -51,7 +54,45 @@ app.use(rateLimit({
 
 app.use(express.json());
 
-//WebAssembly (.wasm)
+function verifyRequest(request, response, next) {
+    const serverTime = Date.now();
+
+    const [clientSignature, clientTime] = getClientSignatureAndTimeMS(request.get('x-key'));
+    
+    const timeDifference = Math.abs(serverTime - clientTime);
+    
+    const serverSignature = crypto
+        .createHash('sha256')
+        .update(clientTime + "|ConstantString")
+        .digest('hex');
+
+    if ((timeDifference < 10*1000)&&(serverSignature === clientSignature)) {
+        next();
+    } else {
+        response.send();
+    }
+}
+
+const getClientSignatureAndTimeMS = (key) => {
+    const baseHexadecimal = 16;
+    const timeOffsetPosition = parseInt(key.charAt(0), baseHexadecimal);
+    const timeStart = 1 + timeOffsetPosition;
+    const timeLength = 16;
+
+    const clientSignature = key.substring(0, timeStart) + key.substring(timeStart + timeLength);
+
+    let timeObfuscate = key.substring(timeStart, timeStart + timeLength);
+    timeObfuscate = BigInt("0x" + timeObfuscate);
+
+    const MASK_64 = (1n << 64n) - 1n;
+    const inverted = timeObfuscate ^ MASK_64;
+    const secretHexPosition = parseInt(clientSignature.charAt(7), baseHexadecimal);
+    let secretHex = clientSignature.substring(secretHexPosition, secretHexPosition + timeLength);
+    secretHex = BigInt("0x" + secretHex);
+    const timeMS = Number(inverted ^ secretHex);
+    
+    return [clientSignature, timeMS];
+}
 
 app.get('/data', async (req, res) => {
     const queriedData = {lastUpdatedTime: {}, data: {}};
@@ -90,10 +131,7 @@ const queryOfGetMethod = async (data, property) => {
 }
 
 app.post('/data', async (req, res) => {
-    let {secretKey, updatedTime} = req.body;
-
-    console.log(secretKey);
-
+    const updatedTime = req.body;
     const queriedData = {lastUpdatedTime: {}, data: {}};
     const data = queriedData.data;
     let lastUpdatedTime = queriedData.lastUpdatedTime;
