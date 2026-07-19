@@ -33,7 +33,6 @@ const Footer = () => {
         </footer>
     );
 }
-export default Footer;
 
 let TrendNovelsInMonthCount = 1;//create to check update data, it will be delete when app is deployed
 const TrendNovelsInMonth = props => {console.log(`render TrendNovelsInMonth: ${Math.floor(++TrendNovelsInMonthCount/2)} times`);//create to check update data, it will be delete when app is deployed
@@ -55,3 +54,5 @@ const Paragraph = props => {
 const HighLigh = data => {
     return <a className="text-link hover-t-decoration" title={data.title} href="#0">{data.marker}</a>;
 }
+
+export default Footer;

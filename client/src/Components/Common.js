@@ -1,6 +1,6 @@
 import { useUpdate } from './../updatedData';
 
-export const TableOfList = props => {
+const TableOfList = props => {
     return <table className={props.cssTable}>
         <tbody>
         {props.rows.map((row, i) =>
@@ -19,11 +19,11 @@ export const TableOfList = props => {
     </table>
 }
 
-export const TitleSection = ({title}) => {
+const TitleSection = ({title}) => {
     return <h2><span className="hover-t-decoration" title={title}>{title}</span> <i className="fa fa-angle-right"></i></h2>;
 }
 
-export const More = props => {
+const More = props => {
     return <div className="d-flex">
         <a className="d-flex align-items-center justify-content-center text-white mx-auto pill" title={props.title} href="#0">
             <p className="d-inline-block hover-t-decoration">XEM THÊM</p>
@@ -33,7 +33,7 @@ export const More = props => {
 }
 
 let SimpleListOfNovelsCount = 3;//create to check update data, it will be delete when app is deployed
-export const SimpleListOfNovels = props => {console.log(`render SimpleListOfNovels: ${Math.floor(++SimpleListOfNovelsCount/4)} times`);//create to check update data, it will be delete when app is deployed
+const SimpleListOfNovels = props => {console.log(`render SimpleListOfNovels: ${Math.floor(++SimpleListOfNovelsCount/4)} times`);//create to check update data, it will be delete when app is deployed
     useUpdate(props.nameUpdateTime);
 
     return (
@@ -47,3 +47,5 @@ export const SimpleListOfNovels = props => {console.log(`render SimpleListOfNove
         </div>
     );
 }
+
+export {TableOfList, TitleSection, More, SimpleListOfNovels};

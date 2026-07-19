@@ -1,12 +1,12 @@
-export const cssTable_ = "position-absolute top-100 start-0 table table-bordered bg-white w-table";
+const cssTable_ = "position-absolute top-100 start-0 table table-bordered bg-white w-table";
 
-export const listOfTypeNovels = [
+const listOfTypeNovels = [
     [{type: "Tiên Hiệp"}, {type: "Kiếm Hiệp"}], [{type: "Ngôn Tình"}, {type: "Truyện Teen"}], [{type: "Đô Thị"}, {type: "Quân Sự"}], 
     [{type: "Lịch Sử"}, {type: "Xuyên Không"}], [{type: "Truyện Ma"}, {type: "Trinh Thám"}], [{type: "Huyền Huyễn"}, {type: "Khoa Huyễn"}], 
     [{type: "Dị Giới"}, {type: "Võng Du"}], [{type: "Truyện Ngắn"}, {type: "Truyện Cười"}], [{type: "Tiểu Thuyết"}, {type: "Review"}]
 ];
 
-export const arrange = [
+const arrange = [
     [
         {cssIcon: "d-block fa fa-diamond", title: "Truyện Dịch", type: "Truyện Dịch"}, 
         {cssIcon: "d-block fa fa-refresh", title: "Truyện Mới Cập Nhật", type: "Mới Cập Nhật"}
@@ -41,3 +41,5 @@ for (let i = 0; i < arrange.length; i++) {
 arrange[0][0].cssLink = "d-flex align-items-center text-hot";
 arrange[3][0].colSpan = 2;
 arrange[3][0].cssLink = "d-flex align-items-center justify-content-center text-hot";
+
+export {cssTable_, listOfTypeNovels, arrange};

@@ -32,7 +32,7 @@ const getKey = () => {
     return secretKeyInstance.UTF8ToString(secretKeyInstance._createSecretKey());
 }
 
-export const useUpdate = name => {
+const useUpdate = name => {
     let setUpdatedTime = useState(window.lastUpdatedTime[name])[1];
     let setUp = useRef(false);
 
@@ -220,3 +220,5 @@ const propsFunction = {
 }
 
 setTimeout(requestData, 10000);
+
+export {useUpdate};

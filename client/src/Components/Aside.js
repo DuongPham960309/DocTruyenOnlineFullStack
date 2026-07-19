@@ -12,7 +12,6 @@ const Aside = () => {
         </div>
     </aside>
 }
-export default Aside;
 
 const TypeNovelsList = () => {
     return (
@@ -60,3 +59,5 @@ const RankList = props => {console.log(`render RankList: ${Math.floor(++RankList
         </tr>
     );
 }
+
+export default Aside;

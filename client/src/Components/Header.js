@@ -24,7 +24,6 @@ const Header = () => {
         </header>
     );
 }
-export default Header;
 
 const ReadNovelOnline = () => {
     return (
@@ -75,3 +74,5 @@ const LogIn = () => {
 const ItemNav = props => {
     return <div><p className="d-inline-block pl-item color-main-list item-main-hover">{props.item}</p></div>;
 }
+
+export default Header;

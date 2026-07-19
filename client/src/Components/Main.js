@@ -17,7 +17,6 @@ const Main = () => {
         </main>
     );
 }
-export default Main;
 
 const SuggestedNovels = () => {
     return (
@@ -168,3 +167,5 @@ const LeftOfShortNovels = () => {console.log(`render LeftOfShortNovels: ${Math.f
         </div>
     );
 }
+
+export default Main;

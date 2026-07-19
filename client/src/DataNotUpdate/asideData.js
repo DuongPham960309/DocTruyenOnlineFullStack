@@ -11,7 +11,7 @@ class PropsTypeNovelList {
     cssType = "d-inline-block pl-item hover-t-decoration";
 }
 
-export const typeNovelsListData = [
+const typeNovelsListData = [
     ["Tiên Hiệp", "Kiếm Hiệp"], ["Truyện Teen", "Ngôn Tình"], ["Đoản Văn", "Đông Phương"], ["Gia Đấu", "Nữ Cường"], 
     ["Cung Đấu", "Truyện Sủng"], ["Truyện Ngược", "Linh Dị"], ["Thám Hiểm", "Bách Hợp"], ["Hài Hước", "Hiện Đại"], 
     ["Việt Nam", "Light Novel"], ["Nữ Phụ", "Phương Tây"], ["Mạt Thế", "Cổ Đại"], ["Điền Văn", "Đồng Nhân"], ["Trọng Sinh", "Dị Năng"], 
@@ -19,7 +19,6 @@ export const typeNovelsListData = [
     ["Truyện Ma", "Xuyên Nhanh"], ["Quan Trường", "Đam Mỹ"], ["Hệ Thống", "Tiểu Thuyết"], ["Truyện Cười", "Truyện Ngắn"], 
     ["Truyện Trinh Thám", "Truyện Sắc"]
 ];
-export default typeNovelsListData;
 
 {
     let length = typeNovelsListData.length;
@@ -37,3 +36,5 @@ export default typeNovelsListData;
         }
     }
 }
+
+export default typeNovelsListData;
