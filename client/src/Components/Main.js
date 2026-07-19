@@ -1,5 +1,4 @@
 import { useUpdate } from './../updatedData';
-import * as Common from './Common';
 import {TitleSection, More, SimpleListOfNovels} from './Common';
 
 const Main = () => {
