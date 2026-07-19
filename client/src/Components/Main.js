@@ -1,5 +1,6 @@
 import { useUpdate } from './../updatedData';
 import * as Common from './Common';
+import {TitleSection, More, SimpleListOfNovels} from './Common';
 
 const Main = () => {
     return (
@@ -21,7 +22,7 @@ const Main = () => {
 const SuggestedNovels = () => {
     return (
         <section className="bg-white">
-            <Common.TitleSection title="TRUYỆN ĐỀ CỬ" />
+            <TitleSection title="TRUYỆN ĐỀ CỬ" />
             <RenderTypeNovels />
             <div id="carouselExampleControls" className="carousel slide" data-bs-ride="carousel">
                 <div className="carousel-inner"><Carousels /></div>
@@ -67,12 +68,12 @@ const Carousels = () => {console.log(`render Carousels: ${Math.floor(++Carousels
 const ShowNovels = props => {
     return (
         <section className="bg-white">
-            <Common.TitleSection title={props.sectionName} />
+            <TitleSection title={props.sectionName} />
             {(props.haveTypeNovels === 1) && <RenderTypeNovels />}
             <div className="row cols-novel row-cols-4 m-0">
                 <DecriptionNovels novels={props.novels} nameUpdateTime={props.nameUpdateTime} />
             </div>
-            <Common.More title={props.sectionName} />
+            <More title={props.sectionName} />
         </section>
     );
 }
@@ -98,10 +99,10 @@ const UpdatedNovels = () => {
     const sectionName = "TRUYỆN MỚI CẬP NHẬT";
 
     return <section className="bg-white">
-        <Common.TitleSection title={sectionName} />
+        <TitleSection title={sectionName} />
         <RenderTypeNovels />
         <table className="table table-hover table-update-novel align-middle"><tbody><UpdatedNovelsList /></tbody></table>
-        <Common.More title={sectionName} />
+        <More title={sectionName} />
     </section>
 }
 
@@ -142,10 +143,10 @@ const RenderTypeNovels = () => {
 const ShortNovels = () => {
     return (
         <section className="bg-white">
-            <Common.TitleSection title="TRUYỆN NGẮN" />
+            <TitleSection title="TRUYỆN NGẮN" />
             <div className="d-flex flex-wrap col-short-novel row-cols-2 pb-shorts-novel">
                 <LeftOfShortNovels />
-                <Common.SimpleListOfNovels novels={window.data.rightOfShortNovels} nameUpdateTime="rightOfShortNovels" />
+                <SimpleListOfNovels novels={window.data.rightOfShortNovels} nameUpdateTime="rightOfShortNovels" />
             </div>
         </section>
     );

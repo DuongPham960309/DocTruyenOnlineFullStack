@@ -1,5 +1,5 @@
-import * as headerData from './../DataNotUpdate/headerData';
-import * as Common from './Common';
+import {cssTable_, listOfTypeNovels, arrange} from './../DataNotUpdate/headerData';
+import {TableOfList} from './Common';
 import logo from "./../images/logo.png";
 
 const Header = () => {
@@ -9,12 +9,12 @@ const Header = () => {
                 <div className="d-flex flex-wrap mx-nav-negative">
                     <ReadNovelOnline />
                     <ItemsList 
-                    cssIcon="d-block fa fa-tags color-main-list" item="Thể loại" cssTable={headerData.cssTable_} 
-                    rows={headerData.listOfTypeNovels} 
+                    cssIcon="d-block fa fa-tags color-main-list" item="Thể loại" cssTable={cssTable_} 
+                    rows={listOfTypeNovels} 
                     />
                     <ItemsList 
-                    cssIcon="d-block fa fa-list color-main-list" item="Sắp xếp" cssTable={headerData.cssTable_} 
-                    rows={headerData.arrange} 
+                    cssIcon="d-block fa fa-list color-main-list" item="Sắp xếp" cssTable={cssTable_} 
+                    rows={arrange} 
                     />
                     <UpLoad />
                     <Search />
@@ -39,7 +39,7 @@ const ItemsList = props => {
         <div className="max-460-none d-flex-edit align-items-center p-item-main position-relative hover-show">
             <i className={props.cssIcon}></i>
             <ItemNav item={props.item} />
-            <Common.TableOfList cssTable={props.cssTable} rows={props.rows} />
+            <TableOfList cssTable={props.cssTable} rows={props.rows} />
         </div>
     );
 }

@@ -1,6 +1,6 @@
 import { useUpdate } from './../updatedData';
 import typeNovelsListData from '../DataNotUpdate/asideData.js';
-import * as Common from './Common';
+import {TitleSection, TableOfList, SimpleListOfNovels, More} from './Common';
 
 const Aside = () => {
     return <aside className="max-860-w-full col-4">
@@ -16,8 +16,8 @@ const Aside = () => {
 const TypeNovelsList = () => {
     return (
         <section className="bg-white type-novel">
-            <Common.TitleSection title="THỂ LOẠI TRUYỆN" />
-            <Common.TableOfList cssTable="table bg-white w-100" rows={typeNovelsListData} />
+            <TitleSection title="THỂ LOẠI TRUYỆN" />
+            <TableOfList cssTable="table bg-white w-100" rows={typeNovelsListData} />
         </section>
     );
 }
@@ -27,18 +27,18 @@ const ReviewNovels = () => {
 
     return (
         <section className="bg-white review-novel">
-            <Common.TitleSection title={sectionName} />
-            <Common.SimpleListOfNovels novels={window.data.reviewNovels} nameUpdateTime="reviewNovels" />
-            <Common.More title={sectionName} />
+            <TitleSection title={sectionName} />
+            <SimpleListOfNovels novels={window.data.reviewNovels} nameUpdateTime="reviewNovels" />
+            <More title={sectionName} />
         </section>
     );
 }
 
 const NovelsList = props => {
     return <section className="bg-white">
-        <Common.TitleSection title={props.sectionName} />
+        <TitleSection title={props.sectionName} />
         <table className="table top-list"><tbody><RankList novels={props.novels} nameUpdateTime={props.nameUpdateTime} /></tbody></table>
-        <Common.More title={props.sectionName} />
+        <More title={props.sectionName} />
     </section>
 }
 

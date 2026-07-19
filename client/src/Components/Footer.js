@@ -1,7 +1,7 @@
 import React from "react";
 
 import { useUpdate } from './../updatedData';
-import * as footerData from './../DataNotUpdate/footerData';
+import {text1, text2} from './../DataNotUpdate/footerData';
 import dmca from "./../images/dmca.png";
 import ccBy from "./../images/ccBy.png";
 
@@ -15,8 +15,8 @@ const Footer = () => {
                 </div>
                 <div className="d-flex flex-wrap pv-description">
                     <div className="max-860-w-full col-8">
-                        <Paragraph text={footerData.text1} />
-                        <Paragraph text={footerData.text2} />
+                        <Paragraph text={text1} />
+                        <Paragraph text={text2} />
                         <p className="text-white">Website hoạt động dưới <a className="text-link hover-t-decoration" href="/#">Giấy phép truy 
                             cập mở Creative Commons Attributio 4.0 International License.</a>
                         </p>
