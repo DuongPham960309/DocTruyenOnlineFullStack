@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useUpdate } from './../updatedData';
+import {data, useUpdate} from './../updatedData';
 import {text1, text2} from './../DataNotUpdate/footerData';
 import dmca from "./../images/dmca.png";
 import ccBy from "./../images/ccBy.png";
@@ -38,7 +38,7 @@ let TrendNovelsInMonthCount = 1;//create to check update data, it will be delete
 const TrendNovelsInMonth = props => {console.log(`render TrendNovelsInMonth: ${Math.floor(++TrendNovelsInMonthCount/2)} times`);//create to check update data, it will be delete when app is deployed
     useUpdate("trendNovelsInMonth");
 
-    return window.data.trendNovelsInMonth.map(novel => 
+    return data.trendNovelsInMonth.map(novel => 
         <a key={novel} className="d-inline-block top-novel hover-t-decoration" href="#0">{novel}</a>
     );
 }
@@ -51,8 +51,10 @@ const Paragraph = props => {
     }</p>;
 }
 
-const HighLigh = data => {
-    return <a className="text-link hover-t-decoration" title={data.title} href="#0">{data.marker}</a>;
+//const HighLigh = data => {
+const HighLigh = ({title, marker}) => {
+    //return <a className="text-link hover-t-decoration" title={data.title} href="#0">{data.marker}</a>;
+    return <a className="text-link hover-t-decoration" title={title} href="#0">{marker}</a>;
 }
 
 export default Footer;

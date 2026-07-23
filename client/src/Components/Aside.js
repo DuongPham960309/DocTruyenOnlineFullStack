@@ -1,4 +1,4 @@
-import { useUpdate } from './../updatedData';
+import {data, useUpdate} from './../updatedData';
 import typeNovelsListData from '../DataNotUpdate/asideData.js';
 import {TitleSection, TableOfList, SimpleListOfNovels, More} from './Common';
 
@@ -7,8 +7,8 @@ const Aside = () => {
         <div className="m-content">
             <TypeNovelsList />
             <ReviewNovels />
-            <NovelsList sectionName="TOP TRUYỆN HAY" novels={window.data.topGoodNovels} nameUpdateTime='topGoodNovels' />
-            <NovelsList sectionName="TRUYỆN MỚI ĐĂNG" novels={window.data.newUpdateNovels} nameUpdateTime='newUpdateNovels' />
+            <NovelsList sectionName="TOP TRUYỆN HAY" novels={data.topGoodNovels} nameUpdateTime='topGoodNovels' />
+            <NovelsList sectionName="TRUYỆN MỚI ĐĂNG" novels={data.newUpdateNovels} nameUpdateTime='newUpdateNovels' />
         </div>
     </aside>
 }
@@ -28,7 +28,7 @@ const ReviewNovels = () => {
     return (
         <section className="bg-white review-novel">
             <TitleSection title={sectionName} />
-            <SimpleListOfNovels novels={window.data.reviewNovels} nameUpdateTime="reviewNovels" />
+            <SimpleListOfNovels novels={data.reviewNovels} nameUpdateTime="reviewNovels" />
             <More title={sectionName} />
         </section>
     );

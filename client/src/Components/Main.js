@@ -1,4 +1,4 @@
-import { useUpdate } from './../updatedData';
+import {data, useUpdate} from './../updatedData';
 import {TitleSection, More, SimpleListOfNovels} from './Common';
 
 const Main = () => {
@@ -7,11 +7,11 @@ const Main = () => {
             <div className="m-content">
                 <SuggestedNovels />
                 <ShowNovels 
-                sectionName="TRUYỆN DỊCH CHỌN LỌC" haveTypeNovels={0} novels={window.data.selectedTranslationNovels} 
+                sectionName="TRUYỆN DỊCH CHỌN LỌC" haveTypeNovels={0} novels={data.selectedTranslationNovels} 
                 nameUpdateTime="selectedTranslationNovels" 
                 />
                 <UpdatedNovels />
-                <ShowNovels sectionName="TRUYỆN FULL" haveTypeNovels={1} novels={window.data.fullNovels} nameUpdateTime="fullNovels" />
+                <ShowNovels sectionName="TRUYỆN FULL" haveTypeNovels={1} novels={data.fullNovels} nameUpdateTime="fullNovels" />
                 <ShortNovels />
             </div>
         </main>
@@ -45,7 +45,7 @@ let CarouselsCount = 1;//create to check update data, it will be delete when app
 const Carousels = () => {console.log(`render Carousels: ${Math.floor(++CarouselsCount/2)} times`);//create to check update data, it will be delete when app is deployed
     useUpdate("suggestedNovels");
 
-    return window.data.suggestedNovels.map((suggestedNovels, i) =>
+    return data.suggestedNovels.map((suggestedNovels, i) =>
         <div key={i} className={suggestedNovels.cssCarousel}>
             <div className="d-grid grid-novel">
             {suggestedNovels.novels.map(novel =>
@@ -109,7 +109,7 @@ let UpdatedNovelsListCount = 1;//create to check update data, it will be delete 
 const UpdatedNovelsList = () => {console.log(`render UpdatedNovelsList: ${Math.floor(++UpdatedNovelsListCount/2)} times`);//create to check update data, it will be delete when app is deployed
     useUpdate("updatedNovels");
 
-    return window.data.updatedNovels.map(novel => 
+    return data.updatedNovels.map(novel => 
         <tr key={novel.name}>
             <td className="d-flex align-items-center">
                 <a className="d-inline-block text-dark hover-t-decoration title-novel-update" title={novel.title} href="#0">
@@ -145,7 +145,7 @@ const ShortNovels = () => {
             <TitleSection title="TRUYỆN NGẮN" />
             <div className="d-flex flex-wrap col-short-novel row-cols-2 pb-shorts-novel">
                 <LeftOfShortNovels />
-                <SimpleListOfNovels novels={window.data.rightOfShortNovels} nameUpdateTime="rightOfShortNovels" />
+                <SimpleListOfNovels novels={data.rightOfShortNovels} nameUpdateTime="rightOfShortNovels" />
             </div>
         </section>
     );
@@ -157,12 +157,12 @@ const LeftOfShortNovels = () => {console.log(`render LeftOfShortNovels: ${Math.f
 
     return (
         <div className="position-relative">
-            <img src={window.data.leftOfShortNovel.image} alt="" title={window.data.leftOfShortNovel.title} />
+            <img src={data.leftOfShortNovel.image} alt="" title={data.leftOfShortNovel.title} />
             <a 
             className="d-inline-block text-white hover-t-decoration position-absolute start-0 end-0 bottom-0 p-above" 
-            title={window.data.leftOfShortNovel.title} href="#0"
+            title={data.leftOfShortNovel.title} href="#0"
             >
-                {window.data.leftOfShortNovel.title}
+                {data.leftOfShortNovel.title}
             </a>
         </div>
     );
