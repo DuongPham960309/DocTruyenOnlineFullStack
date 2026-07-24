@@ -34,12 +34,12 @@ const ReadNovelOnline = () => {
     );
 }
 
-const ItemsList = props => {
+const ItemsList = ({cssIcon, item, cssTable, rows}) => {
     return (
         <div className="max-460-none d-flex-edit align-items-center p-item-main position-relative hover-show">
-            <i className={props.cssIcon}></i>
-            <ItemNav item={props.item} />
-            <TableOfList cssTable={props.cssTable} rows={props.rows} />
+            <i className={cssIcon}></i>
+            <ItemNav item={item} />
+            <TableOfList cssTable={cssTable} rows={rows} />
         </div>
     );
 }
@@ -71,8 +71,8 @@ const LogIn = () => {
     );
 }
 
-const ItemNav = props => {
-    return <div><p className="d-inline-block pl-item color-main-list item-main-hover">{props.item}</p></div>;
+const ItemNav = ({item}) => {
+    return <div><p className="d-inline-block pl-item color-main-list item-main-hover">{item}</p></div>;
 }
 
 export default Header;

@@ -15,8 +15,8 @@ const Footer = () => {
                 </div>
                 <div className="d-flex flex-wrap pv-description">
                     <div className="max-860-w-full col-8">
-                        <Paragraph text={text1} />
-                        <Paragraph text={text2} />
+                        <Paragraph texts={text1} />
+                        <Paragraph texts={text2} />
                         <p className="text-white">Website hoạt động dưới <a className="text-link hover-t-decoration" href="/#">Giấy phép truy 
                             cập mở Creative Commons Attributio 4.0 International License.</a>
                         </p>
@@ -34,7 +34,7 @@ const Footer = () => {
     );
 }
 
-const TrendNovelsInMonth = props => {
+const TrendNovelsInMonth = () => {
     useUpdate("trendNovelsInMonth");
 
     return data.trendNovelsInMonth.map(novel => 
@@ -42,9 +42,9 @@ const TrendNovelsInMonth = props => {
     );
 }
 
-const Paragraph = props => {
+const Paragraph = ({texts}) => {
     return <p className="text-white">{
-        props.text.map((text, i) =>
+        texts.map((text, i) =>
             <React.Fragment key={i}>{(typeof text === "string") ? text : HighLigh(text)}</React.Fragment>
         )
     }</p>;

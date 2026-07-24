@@ -34,18 +34,18 @@ const ReviewNovels = () => {
     );
 }
 
-const NovelsList = props => {
+const NovelsList = ({sectionName, novels, nameUpdateTime}) => {
     return <section className="bg-white">
-        <TitleSection title={props.sectionName} />
-        <table className="table top-list"><tbody><RankList novels={props.novels} nameUpdateTime={props.nameUpdateTime} /></tbody></table>
-        <More title={props.sectionName} />
+        <TitleSection title={sectionName} />
+        <table className="table top-list"><tbody><RankList novels={novels} nameUpdateTime={nameUpdateTime} /></tbody></table>
+        <More title={sectionName} />
     </section>
 }
 
-const RankList = props => {
-    useUpdate(props.nameUpdateTime);
+const RankList = ({novels, nameUpdateTime}) => {
+    useUpdate(nameUpdateTime);
 
-    return props.novels.map(novel =>
+    return novels.map(novel =>
         <tr key={novel.title}>
             <td className={novel.cssRank}>{novel.rank}</td>
             <td>

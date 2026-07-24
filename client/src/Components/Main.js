@@ -63,23 +63,23 @@ const Carousels = () => {
     );
 }
 
-const ShowNovels = props => {
+const ShowNovels = ({sectionName, haveTypeNovels, novels, nameUpdateTime}) => {
     return (
         <section className="bg-white">
-            <TitleSection title={props.sectionName} />
-            {(props.haveTypeNovels === 1) && <RenderTypeNovels />}
+            <TitleSection title={sectionName} />
+            {(haveTypeNovels === 1) && <RenderTypeNovels />}
             <div className="row cols-novel row-cols-4 m-0">
-                <DecriptionNovels novels={props.novels} nameUpdateTime={props.nameUpdateTime} />
+                <DecriptionNovels novels={novels} nameUpdateTime={nameUpdateTime} />
             </div>
-            <More title={props.sectionName} />
+            <More title={sectionName} />
         </section>
     );
 }
 
-const DecriptionNovels = props => {
-    useUpdate(props.nameUpdateTime);
+const DecriptionNovels = ({novels, nameUpdateTime}) => {
+    useUpdate(nameUpdateTime);
 
-    return props.novels.map(novel =>
+    return novels.map(novel =>
         <div key={novel.name} className="container-novel">
             <div><img src={novel.image} alt="" title={novel.title} /></div>
             <div className="container-infor-novel">
