@@ -2,7 +2,7 @@ import {data, useUpdate} from './../updatedData';
 import {TitleSection, More, SimpleListOfNovels} from './Common';
 
 const Main = () => {
-    return (
+    return <>
         <main className="max-860-w-full col-8">
             <div className="m-content">
                 <SuggestedNovels />
@@ -15,11 +15,11 @@ const Main = () => {
                 <ShortNovels />
             </div>
         </main>
-    );
+    </>
 }
 
 const SuggestedNovels = () => {
-    return (
+    return <>
         <section className="bg-white">
             <TitleSection title="TRUYỆN ĐỀ CỬ" />
             <RenderTypeNovels />
@@ -38,7 +38,7 @@ const SuggestedNovels = () => {
                 </button>
             </div>
         </section>
-    );
+    </>
 }
 
 const Carousels = () => {
@@ -64,7 +64,7 @@ const Carousels = () => {
 }
 
 const ShowNovels = ({sectionName, haveTypeNovels, novels, nameUpdateTime}) => {
-    return (
+    return <>
         <section className="bg-white">
             <TitleSection title={sectionName} />
             {(haveTypeNovels === 1) && <RenderTypeNovels />}
@@ -73,7 +73,7 @@ const ShowNovels = ({sectionName, haveTypeNovels, novels, nameUpdateTime}) => {
             </div>
             <More title={sectionName} />
         </section>
-    );
+    </>
 }
 
 const DescriptionNovels = ({novels, nameUpdateTime}) => {
@@ -121,23 +121,23 @@ const UpdatedNovelsList = () => {
 }
 
 const NameNovel = ({novel}) => {
-    return <>{(novel.before !== "") && (novel.before + " ")}<cite>{novel.name}</cite>{(novel.after !== "") && (" " + novel.after)}</>;
+    return <>{(novel.before !== "") && (novel.before + " ")}<cite>{novel.name}</cite>{(novel.after !== "") && (" " + novel.after)}</>
 }
 
 const RenderTypeNovels = () => {
     const types = ["Ngôn Tình", "Truyện Teen", "Tiên Hiệp", "Kiếm Hiệp", "Xuyên Không"];
 
-    return (
+    return <>
         <div className="d-flex flex-wrap container-type-novel">
         {types.map(type =>
             <a key={type} className="d-block text-white hover-t-decoration" href="#0">{type}</a>
         )}
         </div>
-    );
+    </>
 }
 
 const ShortNovels = () => {
-    return (
+    return <>
         <section className="bg-white">
             <TitleSection title="TRUYỆN NGẮN" />
             <div className="d-flex flex-wrap col-short-novel row-cols-2 pb-shorts-novel">
@@ -145,13 +145,13 @@ const ShortNovels = () => {
                 <SimpleListOfNovels novels={data.rightOfShortNovels} nameUpdateTime="rightOfShortNovels" />
             </div>
         </section>
-    );
+    </>
 }
 
 const LeftOfShortNovels = () => {
     useUpdate("leftOfShortNovel");
 
-    return (
+    return <>
         <div className="position-relative">
             <img src={data.leftOfShortNovel.image} alt="" title={data.leftOfShortNovel.title} />
             <a 
@@ -161,7 +161,7 @@ const LeftOfShortNovels = () => {
                 {data.leftOfShortNovel.title}
             </a>
         </div>
-    );
+    </>
 }
 
 export default Main;

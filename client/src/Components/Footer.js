@@ -6,7 +6,7 @@ import dmca from "./../images/dmca.png";
 import ccBy from "./../images/ccBy.png";
 
 const Footer = () => {
-    return (
+    return <>
         <footer className="footer">
             <div className="max-width-main mx-auto">
                 <div className="bg-dark p-top-novel-month">
@@ -31,7 +31,7 @@ const Footer = () => {
                 </div>
             </div>
         </footer>
-    );
+    </>
 }
 
 const TrendNovelsInMonth = () => {

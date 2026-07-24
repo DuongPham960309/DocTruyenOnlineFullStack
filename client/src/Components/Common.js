@@ -35,7 +35,7 @@ const More = ({title}) => {
 const SimpleListOfNovels = ({novels, nameUpdateTime}) => {
     useUpdate(nameUpdateTime);
 
-    return (
+    return <>
         <div className="right-novel">
         {novels.map(novel =>
             <div key={novel.title} className={novel.cssContainer}>
@@ -44,7 +44,7 @@ const SimpleListOfNovels = ({novels, nameUpdateTime}) => {
             </div>
         )}
         </div>
-    );
+    </>
 }
 
 export {TableOfList, TitleSection, More, SimpleListOfNovels};

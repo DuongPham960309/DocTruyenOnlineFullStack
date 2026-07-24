@@ -14,24 +14,24 @@ const Aside = () => {
 }
 
 const TypeNovelsList = () => {
-    return (
+    return <>
         <section className="bg-white type-novel">
             <TitleSection title="THỂ LOẠI TRUYỆN" />
             <TableOfList cssTable="table bg-white w-100" rows={typeNovelsListData} />
         </section>
-    );
+    </>
 }
 
 const ReviewNovels = () => {
     const sectionName = "REVIEW TRUYỆN";
 
-    return (
+    return <>
         <section className="bg-white review-novel">
             <TitleSection title={sectionName} />
             <SimpleListOfNovels novels={data.reviewNovels} nameUpdateTime="reviewNovels" />
             <More title={sectionName} />
         </section>
-    );
+    </>
 }
 
 const NovelsList = ({sectionName, novels, nameUpdateTime}) => {
