@@ -32,8 +32,7 @@ const More = props => {
     </div>
 }
 
-let SimpleListOfNovelsCount = 3;//create to check update data, it will be delete when app is deployed
-const SimpleListOfNovels = props => {console.log(`render SimpleListOfNovels: ${Math.floor(++SimpleListOfNovelsCount/4)} times`);//create to check update data, it will be delete when app is deployed
+const SimpleListOfNovels = props => {
     useUpdate(props.nameUpdateTime);
 
     return (

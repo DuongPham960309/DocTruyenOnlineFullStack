@@ -41,8 +41,7 @@ const SuggestedNovels = () => {
     );
 }
 
-let CarouselsCount = 1;//create to check update data, it will be delete when app is deployed
-const Carousels = () => {console.log(`render Carousels: ${Math.floor(++CarouselsCount/2)} times`);//create to check update data, it will be delete when app is deployed
+const Carousels = () => {
     useUpdate("suggestedNovels");
 
     return data.suggestedNovels.map((suggestedNovels, i) =>
@@ -77,8 +76,7 @@ const ShowNovels = props => {
     );
 }
 
-let DecriptionNovelsCount = 3;//create to check update data, it will be delete when app is deployed
-const DecriptionNovels = props => {console.log(`render DecriptionNovels: ${Math.floor(++DecriptionNovelsCount/4)} times`);//create to check update data, it will be delete when app is deployed
+const DecriptionNovels = props => {
     useUpdate(props.nameUpdateTime);
 
     return props.novels.map(novel =>
@@ -105,8 +103,7 @@ const UpdatedNovels = () => {
     </section>
 }
 
-let UpdatedNovelsListCount = 1;//create to check update data, it will be delete when app is deployed
-const UpdatedNovelsList = () => {console.log(`render UpdatedNovelsList: ${Math.floor(++UpdatedNovelsListCount/2)} times`);//create to check update data, it will be delete when app is deployed
+const UpdatedNovelsList = () => {
     useUpdate("updatedNovels");
 
     return data.updatedNovels.map(novel => 
@@ -151,8 +148,7 @@ const ShortNovels = () => {
     );
 }
 
-let LeftOfShortNovelsCount = 1;//create to check update data, it will be delete when app is deployed
-const LeftOfShortNovels = () => {console.log(`render LeftOfShortNovels: ${Math.floor(++LeftOfShortNovelsCount/2)} times`);//create to check update data, it will be delete when app is deployed
+const LeftOfShortNovels = () => {
     useUpdate("leftOfShortNovel");
 
     return (

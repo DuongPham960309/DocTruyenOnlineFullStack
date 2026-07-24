@@ -42,8 +42,7 @@ const NovelsList = props => {
     </section>
 }
 
-let RankListCount = 3;//create to check update data, it will be delete when app is deployed
-const RankList = props => {console.log(`render RankList: ${Math.floor(++RankListCount/4)} times`);//create to check update data, it will be delete when app is deployed
+const RankList = props => {
     useUpdate(props.nameUpdateTime);
 
     return props.novels.map(novel =>
