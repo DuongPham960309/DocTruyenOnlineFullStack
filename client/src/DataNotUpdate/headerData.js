@@ -1,5 +1,3 @@
-const cssTable_ = "position-absolute top-100 start-0 table table-bordered bg-white w-table";
-
 const listOfTypeNovels = [
     [{type: "Tiên Hiệp"}, {type: "Kiếm Hiệp"}], [{type: "Ngôn Tình"}, {type: "Truyện Teen"}], [{type: "Đô Thị"}, {type: "Quân Sự"}], 
     [{type: "Lịch Sử"}, {type: "Xuyên Không"}], [{type: "Truyện Ma"}, {type: "Trinh Thám"}], [{type: "Huyền Huyễn"}, {type: "Khoa Huyễn"}], 
@@ -42,4 +40,4 @@ arrange[0][0].cssLink = "d-flex align-items-center text-hot";
 arrange[3][0].colSpan = 2;
 arrange[3][0].cssLink = "d-flex align-items-center justify-content-center text-hot";
 
-export {cssTable_, listOfTypeNovels, arrange};
+export {listOfTypeNovels, arrange};

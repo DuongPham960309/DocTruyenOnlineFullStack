@@ -1,4 +1,4 @@
-import {cssTable_, listOfTypeNovels, arrange} from './../DataNotUpdate/headerData';
+import {listOfTypeNovels, arrange} from './../DataNotUpdate/headerData';
 import {TableOfList} from './Common';
 import logo from "./../images/logo.png";
 
@@ -9,12 +9,10 @@ const Header = () => {
                 <div className="d-flex flex-wrap mx-nav-negative">
                     <ReadNovelOnline />
                     <ItemsList 
-                    cssIcon="d-block fa fa-tags color-main-list" item="Thể loại" cssTable={cssTable_} 
-                    rows={listOfTypeNovels} 
+                    cssIcon="d-block fa fa-tags color-main-list" item="Thể loại" rows={listOfTypeNovels} 
                     />
                     <ItemsList 
-                    cssIcon="d-block fa fa-list color-main-list" item="Sắp xếp" cssTable={cssTable_} 
-                    rows={arrange} 
+                    cssIcon="d-block fa fa-list color-main-list" item="Sắp xếp" rows={arrange} 
                     />
                     <UpLoad />
                     <Search />
@@ -34,12 +32,12 @@ const ReadNovelOnline = () => {
     );
 }
 
-const ItemsList = ({cssIcon, item, cssTable, rows}) => {
+const ItemsList = ({cssIcon, item, rows}) => {
     return (
         <div className="max-460-none d-flex-edit align-items-center p-item-main position-relative hover-show">
             <i className={cssIcon}></i>
             <ItemNav item={item} />
-            <TableOfList cssTable={cssTable} rows={rows} />
+            <TableOfList cssTable="position-absolute top-100 start-0 table table-bordered bg-white w-table" rows={rows} />
         </div>
     );
 }
