@@ -69,14 +69,14 @@ const ShowNovels = ({sectionName, haveTypeNovels, novels, nameUpdateTime}) => {
             <TitleSection title={sectionName} />
             {(haveTypeNovels === 1) && <RenderTypeNovels />}
             <div className="row cols-novel row-cols-4 m-0">
-                <DecriptionNovels novels={novels} nameUpdateTime={nameUpdateTime} />
+                <DescriptionNovels novels={novels} nameUpdateTime={nameUpdateTime} />
             </div>
             <More title={sectionName} />
         </section>
     );
 }
 
-const DecriptionNovels = ({novels, nameUpdateTime}) => {
+const DescriptionNovels = ({novels, nameUpdateTime}) => {
     useUpdate(nameUpdateTime);
 
     return novels.map(novel =>

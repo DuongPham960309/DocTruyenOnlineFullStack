@@ -92,8 +92,7 @@ const propsUpdatedNovels = () => {
 }
 
 const titleNovel_ = novel => {
-    novel.title = (novel.before !== "") ? (novel.before + " " + novel.name) : novel.name;
-    novel.title = (novel.after !== "") ? (novel.title + " " + novel.after) : novel.title;
+    novel.title = [novel.before, novel.name, novel.after].filter(Boolean).join(" ");
 }
 
 const propsLeftOfShortNovel = () => {
