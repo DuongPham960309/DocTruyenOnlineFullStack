@@ -6,9 +6,9 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
-    "dev": "cross-env NODE_ENV=development node -r dotenv/config server.js dotenv_config_path=.env.development",
-    "prod": "cross-env NODE_ENV=production node -r dotenv/config server.js dotenv_config_path=.env.production"
+    "start": "node compiled-js/server.js",
+    "dev": "cross-env NODE_ENV=development node -r dotenv/config compiled-js/server.js dotenv_config_path=env/.env.development",
+    "prod": "cross-env NODE_ENV=production node -r dotenv/config compiled-js/server.js dotenv_config_path=env/.env.production"
   },
   "keywords": [],
   "author": "",
@@ -24,5 +24,9 @@
     "http": "^0.0.1-security",
     "mysql2": "^3.6.3",
     "nodemon": "^3.0.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "typescript": "^7.0.2"
   }
 }
