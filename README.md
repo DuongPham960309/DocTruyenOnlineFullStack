@@ -10,6 +10,37 @@ Dự án web đọc truyện trực tuyến kiến trúc Full-Stack đáp ứng 
 
 ---
 
+## 🛠️ Công Nghệ Sử Dụng (Tech Stack)
+
+| Phân tầng | Công nghệ / Thư viện |
+| :--- | :--- |
+| **Frontend** | ReactJS 18, React Hooks, WebAssembly (C++ / PicoSHA2), SCSS/CSS3, Bootstrap 5 Grid System, AJAX/Fetch API |
+| **Backend** | Node.js, Express.js, Crypto Verification, express-rate-limit, CORS |
+| **Database** | MySQL 8 (`mysql2` connection pool) |
+| **Tools** | Git/GitHub, Visual Studio Code |
+
+---
+
+## 🚀 Tính Năng & Kiến Trúc Nổi Bật (Technical Highlights)
+
+### 1. Kiến Trúc Full-Stack (Full-Stack Architecture)
+* Xây dựng hệ thống web đọc truyện đáp ứng tải cao, kết hợp **ReactJS 18** cho Frontend, **Node.js/Express.js** cho Backend và hệ quản trị cơ sở dữ liệu **MySQL 8**.
+
+### 2. Mô Hình Bảo Mật API Đa Tầng (Multi-layered API Security)
+* **Xác thực Request với WebAssembly (.wasm):** Tích hợp module C++ (`PicoSHA2`) biên dịch sang WebAssembly vào ReactJS để sinh token `x-key` động. Thực hiện băm kết hợp chuỗi bí mật & mốc thời gian thực (**Request Timestamp**) qua thuật toán tiêu chuẩn **SHA-256**, sau đó trộn chuỗi băm với dữ liệu thời gian đã mã hóa nhằm chống Replay Attack và ngăn chặn truy vấn API trái phép từ bên ngoài.
+* **Kiểm soát Truy cập (CORS):** Cấu hình Cross-Origin Resource Sharing ở Backend Express.js để giới hạn tên miền truy cập (`http://localhost:3000`), chặn đứng các yêu cầu từ các domain không xác định.
+* **Chống tấn công DoS & Brute-Force (Rate Limiting):** Áp dụng middleware `express-rate-limit` để giới hạn số lượng request (tối đa 500 requests / 15 phút / IP), bảo vệ hạ tầng máy chủ khỏi nguy cơ quá tải và spam API.
+
+### 3. Tối Ưu Băng Thông & Hiệu Năng Render (Selective Dynamic Polling)
+* **Cơ chế Polling 2 chiều:** Thiết lập cơ chế Polling định kỳ 5 giây kết hợp so sánh mốc thời gian cập nhật dữ liệu 2 chiều (**Data Updated Time** giữa Frontend và MySQL).
+* **Tối ưu Backend:** Áp dụng `Promise.allSettled` để **xử lý bất đồng bộ song song** (thay vì chạy tuần tự), kết hợp kiểm tra **Data Updated Time** để chỉ thực thi truy vấn SQL (`pool.query`) cho các Section có dữ liệu mới, giúp rút ngắn tối đa thời gian phản hồi API và giảm tải cho Database.
+* **Tối ưu Frontend (Granular Re-render):** Cập nhật State cục bộ chính xác đến từng Sub-component chứa dữ liệu động, giữ nguyên trạng thái tĩnh tuyệt đối cho các Component không thay đổi ở cả cấp độ trang (`Header`, `TypeNovelsList`,...) lẫn bên trong Section (`TitleSection`, `More`,...), triệt tiêu hoàn toàn hiện tượng re-render thừa trên toàn bộ ứng dụng.
+
+### 4. Giao Diện Tương Thích Đa Thiết Bị (Responsive UI)
+* Tối ưu hóa giao diện hiển thị chuẩn Responsive cho các màn hình Mobile / Tablet / Desktop bằng SCSS tùy chỉnh kết hợp với hệ thống lưới **Bootstrap 5 Grid System**.
+
+---
+
 ## 📂 Cấu Trúc Thư Mục Dự Án (Project Structure)
 
 ```text
@@ -29,47 +60,24 @@ DOCTRUYENONLINEFULLSTACK/
 ├── database/                   # Thư mục cơ sở dữ liệu
 │   └── doc_truyen_online.sql   # File SQL khởi tạo Database & Data
 │
-├── server/                     # Backend App (Node.js & Express.js)
-│   ├── .env.development        # Cấu hình môi trường Development
-│   ├── .env.production         # Cấu hình môi trường Production
-│   └── server.js               # Express Server & API Routes
+├── rootWasm/                   # Mã nguồn C++ cho WebAssembly
+│   ├── picosha2.h              # Header C++ thuật toán SHA-256
+│   └── SecretKey.cpp           # Source C++ biên dịch WebAssembly
 │
-├── picosha2.h                  # Header C++ thuật toán SHA-256
-├── SecretKey.cpp               # Source C++ biên dịch WebAssembly
-├── SecretKey.js / .wasm        # File Output WebAssembly đã biên dịch
+├── server/                     # Backend App (Node.js & Express.js với TypeScript)
+│   ├── compiled-js/            # Mã JavaScript đã biên dịch từ TypeScript (kèm .map & .d.ts)
+│   ├── env/                    # Cấu hình môi trường
+│   │   ├── .env.development
+│   │   └── .env.production
+│   ├── ts/                     # Mã nguồn TypeScript phía Backend
+│   │   ├── server.ts           # Express Server & API Routes chính
+│   │   └── types.ts            # Định nghĩa các TypeScript Interfaces & Types
+│   └── note.txt                # Ghi chú phát triển Backend
+│
+├── package.json / lock.json    # Quản lý dependencies & scripts của dự án
+├── tsconfig.json               # Cấu hình trình biên dịch TypeScript (tsc)
 └── README.md                   # Tài liệu hướng dẫn dự án
 ```
-
----
-
-## 🚀 Tính Năng & Kiến Trúc Nổi Bật (Technical Highlights)
-
-### 1. Kiến Trúc Full-Stack (Full-Stack Architecture)
-* Xây dựng hệ thống web đọc truyện đáp ứng tải cao, kết hợp **ReactJS 18** cho Frontend, **Node.js/Express.js** cho Backend và hệ quản trị cơ sở dữ liệu **MySQL 8**.
-
-### 2. Mô Hình Bảo Mật API Đa Tầng (Multi-layered API Security)
-* **Xác thực Request với WebAssembly (.wasm):** Tích hợp module C++ (`PicoSHA2`) biên dịch sang WebAssembly vào ReactJS để sinh token `x-key` động. Thực hiện băm kết hợp chuỗi bí mật & mốc thời gian thực (**Request Timestamp**) qua thuật toán tiêu chuẩn **SHA-256**, sau đó trộn chuỗi băm với dữ liệu thời gian đã mã hóa nhằm chống Replay Attack và ngăn chặn truy vấn API trái phép từ bên ngoài.
-* **Kiểm soát Truy cập (CORS):** Cấu hình Cross-Origin Resource Sharing ở Backend Express.js để giới hạn tên miền truy cập (`http://localhost:3000`), chặn đứng các yêu cầu từ các domain không xác định.
-* **Chống tấn công DoS & Brute-Force (Rate Limiting):** Áp dụng middleware `express-rate-limit` để giới hạn số lượng request (tối đa 500 requests / 15 phút per IP), bảo vệ hạ tầng máy chủ khỏi nguy cơ quá tải và spam API.
-
-### 3. Tối Ưu Băng Thông & Hiệu Năng Render (Selective Dynamic Polling)
-* **Cơ chế Polling 2 chiều:** Thiết lập cơ chế Polling định kỳ 5 giây kết hợp so sánh mốc thời gian cập nhật dữ liệu 2 chiều (**Data Updated Time** giữa Frontend và MySQL).
-* **Tối ưu Backend:** Áp dụng `Promise.allSettled` để **xử lý bất đồng bộ song song** (thay vì chạy tuần tự), kết hợp kiểm tra **Data Updated Time** để chỉ thực thi truy vấn SQL (`pool.query`) cho các Section có dữ liệu mới, giúp rút ngắn tối đa thời gian phản hồi API và giảm tải cho Database.
-* **Tối ưu Frontend (Granular Re-render):** Cập nhật State cục bộ chính xác đến từng Sub-component chứa dữ liệu động, giữ nguyên trạng thái tĩnh tuyệt đối cho các Component không thay đổi ở cả cấp độ trang (`Header`, `TypeNovelsList`,...) lẫn bên trong Section (`TitleSection`, `More`,...), triệt tiêu hoàn toàn hiện tượng re-render thừa trên toàn bộ ứng dụng.
-
-### 4. Giao Diện Tương Thích Đa Thiết Bị (Responsive UI)
-* Tối ưu hóa giao diện hiển thị chuẩn Responsive cho các màn hình Mobile / Tablet / Desktop bằng SCSS tùy chỉnh kết hợp với hệ thống lưới **Bootstrap 5 Grid System**.
-
----
-
-## 🛠️ Công Nghệ Sử Dụng (Tech Stack)
-
-| Phân tầng | Công nghệ / Thư viện |
-| :--- | :--- |
-| **Frontend** | ReactJS 18, React Hooks, WebAssembly (C++ / PicoSHA2), SCSS/CSS3, Bootstrap 5 Grid System, AJAX/Fetch API |
-| **Backend** | Node.js, Express.js, Crypto Verification, express-rate-limit, CORS |
-| **Database** | MySQL 8 (`mysql2` connection pool) |
-| **Tools** | Git/GitHub, Visual Studio Code |
 
 ---
 
