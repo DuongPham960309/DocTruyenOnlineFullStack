@@ -69,10 +69,9 @@ DOCTRUYENONLINEFULLSTACK/
 │   ├── env/                    # Cấu hình môi trường
 │   │   ├── .env.development
 │   │   └── .env.production
-│   ├── ts/                     # Mã nguồn TypeScript phía Backend
-│   │   ├── server.ts           # Express Server & API Routes chính
-│   │   └── types.ts            # Định nghĩa các TypeScript Interfaces & Types
-│   └── note.txt                # Ghi chú phát triển Backend
+│   └── ts/                     # Mã nguồn TypeScript phía Backend
+│       ├── server.ts           # Express Server & API Routes chính
+│       └── types.ts            # Định nghĩa các TypeScript Interfaces & Types
 │
 ├── package.json / lock.json    # Quản lý dependencies & scripts của dự án
 ├── tsconfig.json               # Cấu hình trình biên dịch TypeScript (tsc)
