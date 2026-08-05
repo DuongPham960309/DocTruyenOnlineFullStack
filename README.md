@@ -15,7 +15,7 @@ Dự án web đọc truyện trực tuyến kiến trúc Full-Stack đáp ứng 
 | Phân tầng | Công nghệ / Thư viện |
 | :--- | :--- |
 | **Frontend** | ReactJS 18, React Hooks, WebAssembly (C++ / PicoSHA2), SCSS/CSS3, Bootstrap 5 Grid System, AJAX/Fetch API |
-| **Backend** | Node.js, Express.js, Crypto Verification, express-rate-limit, CORS |
+| **Backend** | Node.js, Express.js **(TypeScript)**, Crypto Verification, express-rate-limit, CORS |
 | **Database** | MySQL 8 (`mysql2` connection pool) |
 | **Tools** | Git/GitHub, Visual Studio Code |
 
@@ -89,8 +89,37 @@ DOCTRUYENONLINEFULLSTACK/
 
 ### Các bước khởi chạy
 
-1. **Clone repository về máy local:**
+1. **Mở terminal và clone repository về máy local:**
+
    ```bash
-   git clone [https://github.com/DuongPham960309/DocTruyenOnlineFullStack.git](https://github.com/DuongPham960309/DocTruyenOnlineFullStack.git)
-   cd DocTruyenOnlineFullStack
+   git clone https://github.com/DuongPham960309/DocTruyenOnlineFullStack.git
+   ```
+
+2. **Khởi Tạo Cơ Sở Dữ Liệu (MySQL)**
+
+* Cấu hình cho MySQL Server để khớp thông tin với backend:
+Tham khảo file .env có đường dẫn: server/env/.env.development.
+   ```text
+   host = localhost
+   port = 3306
+   user = root
+   password = 123456
+   database = doc_truyen_online
+   ```
+* Trong MySQL Server, import file .sql có đường dẫn: database/doc_truyen_online.sql.
+
+3. **Khởi Chạy Ứng Dụng**
+
+Mở 2 cửa sổ Terminal song song trong IDE (VS Code) và thực thi lần lượt các lệnh:
+* Bước 3.1: Chạy Backend (Server).
+   ```cmd
+   cd ./server
+   npm install   # Cài đặt dependencies (nếu không có thư mục node_modules)
+   npm run dev   # Khởi chạy server ở chế độ Development
+   ```
+* Bước 3.2: Chạy Frontend (Client) *(Sau khi Server đã khởi động thành công)*.
+   ```cmd
+   cd ./client
+   npm install   # Cài đặt dependencies (nếu không có thư mục node_modules)
+   npm start     # Khởi chạy ứng dụng ReactJS
    ```
