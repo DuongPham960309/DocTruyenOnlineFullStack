@@ -97,8 +97,7 @@ DOCTRUYENONLINEFULLSTACK/
 
 2. **Khởi Tạo Cơ Sở Dữ Liệu (MySQL)**
 
-* Cấu hình cho MySQL Server để khớp thông tin với backend:
-Tham khảo file .env có đường dẫn: server/env/.env.development.
+* Cấu hình cho MySQL Server để khớp thông tin với backend. Tham khảo file .env có đường dẫn: server/env/.env.development.
    ```text
    host = localhost
    port = 3306
@@ -110,7 +109,7 @@ Tham khảo file .env có đường dẫn: server/env/.env.development.
 
 3. **Khởi Chạy Ứng Dụng**
 
-Mở 2 cửa sổ Terminal song song trong IDE (VS Code) và thực thi lần lượt các lệnh:
+   Mở 2 cửa sổ Terminal song song trong IDE (VS Code) và thực thi lần lượt các lệnh:
 * Bước 3.1: Chạy Backend (Server).
    ```cmd
    cd ./server
