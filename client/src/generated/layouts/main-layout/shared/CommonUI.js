@@ -1,4 +1,4 @@
-import { useUpdate } from './../updatedData';
+import { useUpdate } from './../../../App/appLogic';
 
 const TableOfList = ({cssTable, rows}) => {
     return <table className={cssTable}>

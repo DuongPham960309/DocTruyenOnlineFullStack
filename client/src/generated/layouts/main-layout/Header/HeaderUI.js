@@ -1,6 +1,6 @@
-import {listOfTypeNovels, arrange} from './../DataNotUpdate/headerData';
-import {TableOfList} from './Common';
-import logo from "./../images/logo.png";
+import {listOfTypeNovels, arrange} from './headerLogic';
+import {TableOfList} from './../shared/CommonUI';
+import logo from './../../../../assets/images/logo.png';
 
 const Header = () => {
     return <>

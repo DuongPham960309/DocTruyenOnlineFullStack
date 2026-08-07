@@ -1,9 +1,9 @@
 import React from "react";
 
-import {data, useUpdate} from './../updatedData';
-import {text1, text2} from './../DataNotUpdate/footerData';
-import dmca from "./../images/dmca.png";
-import ccBy from "./../images/ccBy.png";
+import {data, useUpdate} from './../../../App/appLogic';
+import {text1, text2} from './footerLogic';
+import dmca from './../../../../assets/images/dmca.png';
+import ccBy from './../../../../assets/images/ccBy.png';
 
 const Footer = () => {
     return <>

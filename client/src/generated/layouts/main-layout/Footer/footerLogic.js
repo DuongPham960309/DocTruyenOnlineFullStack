@@ -1,3 +1,5 @@
+import {data, tempData, propsFunction} from './../../../App/appLogic';
+
 const text1 = [
     "Website ", {title: "đọc truyện online", marker: "đọc truyện"}, " online chất lượng hàng đầu Việt Nam, với nhiều ", 
     {title: "Truyện Tiên Hiệp", marker: "truyện tiên hiệp"}, ", ", {title: "Truyện Kiếm Hiệp", marker: "truyện kiếm hiệp"}, ", ", 
@@ -12,4 +14,10 @@ const text2 = [
     {title: "Privacy agreement", marker: "Thỏa thuận quyền riêng tư"}
 ];
 
-export {text1, text2};
+const propsTrendNovelsInMonth = () => {
+    data.trendNovelsInMonth = tempData.trendNovelsInMonth;
+}
+
+// propsFunction.trendNovelsInMonth = propsTrendNovelsInMonth;
+
+export {text1, text2, propsTrendNovelsInMonth};

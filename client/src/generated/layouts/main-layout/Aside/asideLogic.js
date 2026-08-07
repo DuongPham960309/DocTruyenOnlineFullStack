@@ -1,3 +1,5 @@
+import {data, tempData, propsFunction, propsSimpleListOfNovels} from './../../../App/appLogic';
+
 class PropsTypeNovelList {
     constructor(type) {
         this.type = type;
@@ -37,4 +39,32 @@ const typeNovelsListData = [
     }
 }
 
+const propsReviewNovels = () => {
+    propsSimpleListOfNovels("reviewNovels", "d-flex p-short-novel");
+}
+
+const propsNovelsList = (name) => {
+    let numberNovels = tempData[name].length;
+    let count = numberNovels.toString().length;
+    let novel;
+
+    for (let i = 0; i < numberNovels; i++) {
+        novel = tempData[name][i];
+        novel.rank = (i + 1) + "";
+        novel.rank = novel.rank.padStart(count, "0");
+        novel.cssRank = "rank text-under-r-3";
+    }
+
+    tempData[name][0].cssRank = "rank text-r-1";
+    tempData[name][1].cssRank = "rank text-r-2";
+    tempData[name][2].cssRank = "rank text-r-3";
+
+    data[name] = tempData[name];
+}
+
+// propsFunction.reviewNovels = propsReviewNovels;
+// propsFunction.topGoodNovels = propsNovelsList;
+// propsFunction.newUpdateNovels = propsNovelsList;
+
+export {propsReviewNovels, propsNovelsList};
 export default typeNovelsListData;
