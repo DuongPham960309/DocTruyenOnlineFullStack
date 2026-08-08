@@ -1,7 +1,8 @@
 import React from "react";
 
-import {data, useUpdate} from './../../../App/appLogic';
+import {data} from './../../../App/appLogic';
 import {text1, text2} from './footerLogic';
+import {useUpdate} from './../shared/CommonLogic';
 import dmca from './../../../../assets/images/dmca.png';
 import ccBy from './../../../../assets/images/ccBy.png';
 

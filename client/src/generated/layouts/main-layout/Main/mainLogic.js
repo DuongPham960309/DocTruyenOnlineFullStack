@@ -1,4 +1,5 @@
-import {data, tempData, propsFunction, propsSimpleListOfNovels} from './../../../App/appLogic';
+import {data, tempData, propsFunction} from './../../../App/appLogic';
+import {propsSimpleListOfNovels} from './../shared/CommonLogic';
 
 const propsSuggestedNovels = () => {
   const suggestedNovels = tempData.suggestedNovels;

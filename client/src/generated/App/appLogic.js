@@ -1,5 +1,3 @@
-import { useState, useRef } from 'react';
-
 import loadSecretKey from './../../assets/wasm/SecretKey';
 import {propsSuggestedNovels, propsShowNovels, propsUpdatedNovels, propsLeftOfShortNovel, propsRightOfShortNovels} from 
 './../layouts/main-layout/Main/mainLogic';
@@ -26,27 +24,6 @@ const secretKeyInstance = await loadSecretKey();
 
 const getKey = () => {
     return secretKeyInstance.UTF8ToString(secretKeyInstance._createSecretKey());
-}
-
-const useUpdate = name => {
-    let setUpdatedTime = useState(lastUpdatedTime[name])[1];
-    let setUp = useRef(false);
-
-    if (setUp.current === false) {
-        setLastUpdatedTime[name] = setUpdatedTime;
-        setUp.current = true;
-    }
-}
-
-const propsSimpleListOfNovels = (name, cssContainer) => {
-    const novels = tempData[name];
-
-    for (const novel of novels) {
-        novel.image = require(`./../../assets/images/${novel.image}`);
-        novel.cssContainer = cssContainer;
-    }
-
-    data[name] = novels;
 }
 
 let count = 1;//create to check update data, it will be delete when app is deployed
@@ -84,7 +61,7 @@ const requestData = () => {
 
 {
     const request = new XMLHttpRequest();
-    request.open("GET", "http://localhost:4000/data", false);//data.json is located in public folder
+    request.open("GET", "http://localhost:4000/data", false);
     request.setRequestHeader('x-key', getKey());
     request.send();
 
@@ -106,4 +83,4 @@ const requestData = () => {
 
 setTimeout(requestData, 10000);
 
-export {data, tempData, propsFunction, propsSimpleListOfNovels, useUpdate};
+export {data, tempData, lastUpdatedTime, setLastUpdatedTime, propsFunction};
