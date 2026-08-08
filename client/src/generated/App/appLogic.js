@@ -39,12 +39,19 @@ const useUpdate = name => {
 }
 
 const propsSimpleListOfNovels = (name, cssContainer) => {
-    for (let i = 0; i < tempData[name].length; i++) {
-        tempData[name][i].image = require("./../../assets/images/" + tempData[name][i].image);
-        tempData[name][i].cssContainer = cssContainer;
+    const novels = tempData[name];
+
+    for (const novel of novels) {
+        novel.image = require(`./../../assets/images/${novel.image}`);
+        novel.cssContainer = cssContainer;
     }
 
-    data[name] = tempData[name];
+    // for (let i = 0; i < tempData[name].length; i++) {
+    //     tempData[name][i].image = require("./../../assets/images/" + tempData[name][i].image);
+    //     tempData[name][i].cssContainer = cssContainer;
+    // }
+
+    data[name] = novels;
 }
 
 let count = 1;//create to check update data, it will be delete when app is deployed

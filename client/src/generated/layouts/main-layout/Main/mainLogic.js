@@ -3,7 +3,7 @@ import {data, tempData, propsFunction, propsSimpleListOfNovels} from './../../..
 const propsSuggestedNovels = () => {
   const suggestedNovels = tempData.suggestedNovels;
   let length = Math.ceil(suggestedNovels.length/3);
-  let carousels = new Array(length);
+  const carousels = new Array(length);
 
   for (let i = 0; i < length; i++) {
     carousels[i] = {cssCarousel: "carousel-item", novels: []};
