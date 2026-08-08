@@ -1,19 +1,20 @@
 import {data, tempData, propsFunction, propsSimpleListOfNovels} from './../../../App/appLogic';
 
 const propsSuggestedNovels = () => {
-  let length = Math.ceil(tempData.suggestedNovels.length/3);
+  const suggestedNovels = tempData.suggestedNovels;
+  let length = Math.ceil(suggestedNovels.length/3);
   let carousels = new Array(length);
 
   for (let i = 0; i < length; i++) {
     carousels[i] = {cssCarousel: "carousel-item", novels: []};
   }
 
-  length = tempData.suggestedNovels.length;
+  length = suggestedNovels.length;
 
   for (let i = 0; i < length; i++) {
-    tempData.suggestedNovels[i].image = require("./../../../../assets/images/" + tempData.suggestedNovels[i].image);
-    titleNovel(tempData.suggestedNovels[i]);
-    carousels[Math.floor(i/3)].novels.push(tempData.suggestedNovels[i]);
+    suggestedNovels[i].image = require(`./../../../../assets/images/${suggestedNovels[i].image}`);
+    titleNovel(suggestedNovels[i]);
+    carousels[Math.floor(i/3)].novels.push(suggestedNovels[i]);
   }
 
   carousels[0].cssCarousel = "carousel-item active";
