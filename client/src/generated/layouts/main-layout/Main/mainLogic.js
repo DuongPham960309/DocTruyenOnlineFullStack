@@ -36,10 +36,10 @@ const propsShowNovels = (name) => {
 }
 
 const propsUpdatedNovels = () => {
-  tempData.updatedNovels.forEach(titleNovel);
+  const updatedNovels = tempData.updatedNovels;
+  updatedNovels.forEach(titleNovel);
 
-  let currentTime = new Date("2023-11-11T09:00:00Z");
-  let updatedNovels = tempData.updatedNovels;
+  const currentTime = new Date("2023-11-11T09:00:00Z");
 
   for (const updatedNovel of updatedNovels)
   {
@@ -66,12 +66,14 @@ const propsUpdatedNovels = () => {
     }
   }
 
-  data.updatedNovels = tempData.updatedNovels;
+  data.updatedNovels = updatedNovels;
 }
 
 const propsLeftOfShortNovel = () => {
-  tempData.leftOfShortNovel.image = require("./../../../../assets/images/" + tempData.leftOfShortNovel.image);
-  data.leftOfShortNovel = tempData.leftOfShortNovel;
+  const leftOfShortNovel = tempData.leftOfShortNovel;
+
+  leftOfShortNovel.image = require(`./../../../../assets/images/${leftOfShortNovel.image}`);
+  data.leftOfShortNovel = leftOfShortNovel;
 }
 
 const propsRightOfShortNovels = () => {
