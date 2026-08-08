@@ -20,20 +20,19 @@ const arrange = [
         [{cssIcon: "d-block fa fa-star", title: "Truyện Sáng Tác", type: "Thành Viên Sáng Tác"}]
 ];
 
-const propsNavList_ = {cssTd: "item-sub-hover", colSpan: 1, cssLink: "d-flex align-items-center item", cssType: "d-inline-block pl-item"};
+const propsNavList = {cssTd: "item-sub-hover", colSpan: 1, cssLink: "d-flex align-items-center item", cssType: "d-inline-block pl-item"};
 
-for (let i = 0; i < listOfTypeNovels.length; i++) {
-    for (let j = 0; j < listOfTypeNovels[i].length; j++) {
-        listOfTypeNovels[i][j] = {...listOfTypeNovels[i][j], ...propsNavList_, cssIcon: "d-block fa fa-tags"};
-        listOfTypeNovels[i][j].title =  listOfTypeNovels[i][j].type.includes("Truyện") ?  
-            listOfTypeNovels[i][j].type : ("Truyện " +  listOfTypeNovels[i][j].type);
+for (let row of listOfTypeNovels) {
+    for (let i = 0; i < row.length; i++) {
+        row[i] = {...row[i], ...propsNavList, cssIcon: "d-block fa fa-tags"};
+        row[i].title =  row[i].type.includes("Truyện") ? row[i].type : `Truyện ${row[i].type}`;
     }
 }
 listOfTypeNovels[8][1].title = "Review Truyện";
 
 for (let i = 0; i < arrange.length; i++) {
     arrange[i] = arrange[i].map(item => {
-        return {...item, ...propsNavList_};
+        return {...item, ...propsNavList};
     });
 }
 arrange[0][0].cssLink = "d-flex align-items-center text-hot";

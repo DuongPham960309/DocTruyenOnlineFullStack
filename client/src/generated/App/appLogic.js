@@ -46,11 +46,6 @@ const propsSimpleListOfNovels = (name, cssContainer) => {
         novel.cssContainer = cssContainer;
     }
 
-    // for (let i = 0; i < tempData[name].length; i++) {
-    //     tempData[name][i].image = require("./../../assets/images/" + tempData[name][i].image);
-    //     tempData[name][i].cssContainer = cssContainer;
-    // }
-
     data[name] = novels;
 }
 
@@ -67,7 +62,7 @@ const requestData = () => {
     })
     .then(response => response.json())
     .then(json => {
-        let updatedTime = json.lastUpdatedTime;
+        const updatedTime = json.lastUpdatedTime;
 
         for (let section in json.lastUpdatedTime) {//create to check update data, it will be delete when app is deployed
             json.lastUpdatedTime[section] = json.lastUpdatedTime[section] + (++count);
@@ -88,13 +83,13 @@ const requestData = () => {
 }
 
 {
-    let request = new XMLHttpRequest();
+    const request = new XMLHttpRequest();
     request.open("GET", "http://localhost:4000/data", false);//data.json is located in public folder
     request.setRequestHeader('x-key', getKey());
     request.send();
 
-    let text = request.responseText;
-    let json = JSON.parse(text);
+    const text = request.responseText;
+    const json = JSON.parse(text);
 
     tempData = json.data;
 

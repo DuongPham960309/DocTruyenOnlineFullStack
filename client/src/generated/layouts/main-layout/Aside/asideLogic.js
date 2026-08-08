@@ -44,22 +44,23 @@ const propsReviewNovels = () => {
 }
 
 const propsNovelsList = (name) => {
-    let numberNovels = tempData[name].length;
-    let count = numberNovels.toString().length;
+    const novels = tempData[name];
+    const numberNovels = novels.length;
+    const count = numberNovels.toString().length;
     let novel;
 
     for (let i = 0; i < numberNovels; i++) {
-        novel = tempData[name][i];
+        novel = novels[i];
         novel.rank = (i + 1) + "";
         novel.rank = novel.rank.padStart(count, "0");
         novel.cssRank = "rank text-under-r-3";
     }
 
-    tempData[name][0].cssRank = "rank text-r-1";
-    tempData[name][1].cssRank = "rank text-r-2";
-    tempData[name][2].cssRank = "rank text-r-3";
+    novels[0].cssRank = "rank text-r-1";
+    novels[1].cssRank = "rank text-r-2";
+    novels[2].cssRank = "rank text-r-3";
 
-    data[name] = tempData[name];
+    data[name] = novels;
 }
 
 // propsFunction.reviewNovels = propsReviewNovels;
