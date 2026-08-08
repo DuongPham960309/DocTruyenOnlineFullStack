@@ -41,26 +41,26 @@ const propsUpdatedNovels = () => {
   let currentTime = new Date("2023-11-11T09:00:00Z");
   let updatedNovels = tempData.updatedNovels;
 
-  for (let i = 0; i < updatedNovels.length; i++)
+  for (let updatedNovel of updatedNovels)
   {
-    let lastTime = new Date(updatedNovels[i].last_time);
+    let lastTime = new Date(updatedNovel.last_time);
     let millisecondsDelta = currentTime.getTime() - lastTime.getTime();
     let time = Math.floor(millisecondsDelta/86400000);
 
     if (time > 0) {
-      updatedNovels[i].time = time + " ngày trước";
+      updatedNovel.time = time + " ngày trước";
     } else {
       time = Math.floor(millisecondsDelta/3600000);
 
       if (time > 0) {
-        updatedNovels[i].time = time + " giờ trước";
+        updatedNovel.time = time + " giờ trước";
       } else {
         time = Math.floor(millisecondsDelta/60000);
 
         if (time > 0) {
-          updatedNovels[i].time = time + " phút trước";
+          updatedNovel.time = time + " phút trước";
         } else {
-          updatedNovels[i].time = "mới cập nhật";
+          updatedNovel.time = "mới cập nhật";
         }
       }
     }
