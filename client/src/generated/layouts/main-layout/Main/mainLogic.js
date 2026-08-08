@@ -26,11 +26,10 @@ const titleNovel = novel => {
 }
 
 const propsShowNovels = (name) => {
-  for (let i = 0; i < tempData[name].length; i++) {
-    tempData[name][i].image = require("./../../../../assets/images/" + tempData[name][i].image);
+  for (const novel of tempData[name]) {
+    novel.image = require(`./../../../../assets/images/${novel.image}`);
+    titleNovel(novel);
   }
-
-  tempData[name].forEach(titleNovel);
 
   data[name] = tempData[name];
 }
@@ -41,7 +40,7 @@ const propsUpdatedNovels = () => {
   let currentTime = new Date("2023-11-11T09:00:00Z");
   let updatedNovels = tempData.updatedNovels;
 
-  for (let updatedNovel of updatedNovels)
+  for (const updatedNovel of updatedNovels)
   {
     let lastTime = new Date(updatedNovel.last_time);
     let millisecondsDelta = currentTime.getTime() - lastTime.getTime();
