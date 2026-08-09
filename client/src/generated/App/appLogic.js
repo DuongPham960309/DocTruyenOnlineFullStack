@@ -4,7 +4,6 @@ import {propsSuggestedNovels, propsShowNovels, propsUpdatedNovels, propsLeftOfSh
 import {propsReviewNovels, propsNovelsList} from './../layouts/main-layout/Aside/asideLogic';
 import {propsTrendNovelsInMonth} from './../layouts/main-layout/Footer/footerLogic';
 
-let data = {};
 let tempData = {};
 let lastUpdatedTime = {};
 
@@ -83,4 +82,4 @@ const requestData = () => {
 
 setTimeout(requestData, 10000);
 
-export {data, tempData, lastUpdatedTime, setLastUpdatedTime, propsFunction};
+export {tempData, lastUpdatedTime, setLastUpdatedTime, propsFunction};

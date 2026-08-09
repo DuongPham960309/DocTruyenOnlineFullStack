@@ -1,4 +1,5 @@
-import {data, tempData, propsFunction} from './../../../App/appLogic';
+import {tempData, propsFunction} from './../../../App/appLogic';
+import {data} from './../shared/CommonLogic';
 
 const text1 = [
     "Website ", {title: "đọc truyện online", marker: "đọc truyện"}, " online chất lượng hàng đầu Việt Nam, với nhiều ", 

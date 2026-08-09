@@ -1,5 +1,5 @@
-import {data, tempData, propsFunction} from './../../../App/appLogic';
-import {propsSimpleListOfNovels} from './../shared/CommonLogic';
+import {tempData, propsFunction} from './../../../App/appLogic';
+import {data, propsSimpleListOfNovels} from './../shared/CommonLogic';
 
 class PropsTypeNovelList {
     constructor(type) {

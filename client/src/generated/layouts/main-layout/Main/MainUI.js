@@ -1,6 +1,5 @@
-import {data} from './../../../App/appLogic';
 import {TitleSection, More, SimpleListOfNovels} from './../shared/CommonUI';
-import {useUpdate} from './../shared/CommonLogic';
+import {data, useUpdate} from './../shared/CommonLogic';
 
 const Main = () => {
     return <>

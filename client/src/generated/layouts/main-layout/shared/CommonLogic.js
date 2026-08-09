@@ -1,6 +1,8 @@
 import {useState, useRef} from 'react';
 
-import {tempData, data, lastUpdatedTime, setLastUpdatedTime} from './../../../App/appLogic';
+import {tempData, lastUpdatedTime, setLastUpdatedTime} from './../../../App/appLogic';
+
+let data = {};
 
 const useUpdate = name => {
   let setUpdatedTime = useState(lastUpdatedTime[name])[1];
@@ -23,4 +25,4 @@ const propsSimpleListOfNovels = (name, cssContainer) => {
   data[name] = novels;
 }
 
-export {useUpdate, propsSimpleListOfNovels};
+export {data, useUpdate, propsSimpleListOfNovels};

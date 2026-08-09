@@ -1,7 +1,6 @@
-import {data} from './../../../App/appLogic';
 import typeNovelsListData from './asideLogic';
 import {TitleSection, TableOfList, SimpleListOfNovels, More} from './../shared/CommonUI';
-import {useUpdate} from './../shared/CommonLogic';
+import {data, useUpdate} from './../shared/CommonLogic';
 
 const Aside = () => {
     return <aside className="max-860-w-full col-4">
