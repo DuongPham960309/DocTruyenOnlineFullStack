@@ -1,17 +1,11 @@
-import {useState, useRef} from 'react';
+import {useState} from 'react';
 
 import {tempData, lastUpdatedTime, setLastUpdatedTime} from './../../../App/appLogic';
 
 let data = {};
 
 const useUpdate = name => {
-  let setUpdatedTime = useState(lastUpdatedTime[name])[1];
-  let setUp = useRef(false);
-
-  if (setUp.current === false) {
-    setLastUpdatedTime[name] = setUpdatedTime;
-    setUp.current = true;
-  }
+  [, setLastUpdatedTime[name]] = useState(lastUpdatedTime[name]);
 }
 
 const propsSimpleListOfNovels = (name, cssContainer) => {
