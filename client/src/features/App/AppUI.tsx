@@ -21,7 +21,7 @@ function App() {
             </div>
         </div>
         <Footer />
-    </>;
+    </>
 }
 
 export default App;
