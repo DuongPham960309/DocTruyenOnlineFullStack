@@ -1,21 +1,11 @@
 import type {TTableRowOfList} from './../shared/CommonLogic';
 
-type TListOfTypeNovels = [ITypeNovels, ITypeNovels][];
-
-interface ITypeNovels extends IPropsNavList {
-    title: string,
-    type: string,
-    cssIcon: string
-}
-
 interface IPropsNavList {
     cssTd: string, 
     colSpan: number, 
     cssLink: string, 
     cssType: string
 };
-
-type TArrange = ITypeNovels[][];
 
 const listOfTypeNovels = [
     [{type: "Tiên Hiệp"}, {type: "Kiếm Hiệp"}], [{type: "Ngôn Tình"}, {type: "Truyện Teen"}], [{type: "Đô Thị"}, {type: "Quân Sự"}], 

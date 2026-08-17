@@ -1,27 +1,31 @@
-import type {TTableRowOfList, ISimpleListOfNovels} from './CommonLogic';
-import {useUpdate} from './CommonLogic';
+import type {TTableRowOfList, SimpleListName} from './CommonLogic';
+import {simpleNovelsData, useUpdate} from './CommonLogic';
 
 const TableOfList = ({cssTable, rows}: {cssTable: string, rows: TTableRowOfList}) => {
     return <table className={cssTable}>
         <tbody>
-        {rows.map((row, i) =>
-            <tr key={i}>
-            {row.map(column => 
-                <td key={column.type} className={column.cssTd} colSpan={column.colSpan} title={column.title}>
-                    <a className={column.cssLink} href="#0">
-                        <i className={column.cssIcon}></i>
-                        <div><p className={column.cssType}>{column.type}</p></div>
-                    </a>
-                </td>
+            {rows.map((row, i) =>
+                <tr key={i}>
+                    {row.map(column => 
+                        <td key={column.type} className={column.cssTd} colSpan={column.colSpan} title={column.title}>
+                            <a className={column.cssLink} href="#0">
+                                <i className={column.cssIcon}></i>
+                                <div>
+                                    <p className={column.cssType}>{column.type}</p>
+                                </div>
+                            </a>
+                        </td>
+                    )}
+                </tr>
             )}
-            </tr>
-        )}
         </tbody>
     </table>
 }
 
 const TitleSection = ({title}: {title: string}) => {
-    return <h2><span className="hover-t-decoration" title={title}>{title}</span> <i className="fa fa-angle-right"></i></h2>;
+    return <>
+        <h2><span className="hover-t-decoration" title={title}>{title}</span> <i className="fa fa-angle-right"></i></h2>
+    </>
 }
 
 const More = ({title}: {title: string}) => {
@@ -33,17 +37,17 @@ const More = ({title}: {title: string}) => {
     </div>
 }
 
-const SimpleListOfNovels = ({novels, nameUpdateTime}: ISimpleListOfNovels) => {
+const SimpleListOfNovels = ({nameUpdateTime}: {nameUpdateTime: SimpleListName}) => {
     useUpdate(nameUpdateTime);
 
     return <>
         <div className="right-novel">
-        {novels.map(novel =>
-            <div key={novel.title} className={novel.cssContainer}>
-                <img src={novel.image} alt="" title={novel.title} />
-                <a className="text-dark hover-t-decoration" title={novel.title} href="#0">{novel.title}</a>
-            </div>
-        )}
+            {simpleNovelsData[nameUpdateTime].map(novel =>
+                <div key={novel.title} className={novel.cssContainer}>
+                    <img src={novel.image} alt="" title={novel.title} />
+                    <a className="text-dark hover-t-decoration" title={novel.title} href="#0">{novel.title}</a>
+                </div>
+            )}
         </div>
     </>
 }

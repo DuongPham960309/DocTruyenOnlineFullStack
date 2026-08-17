@@ -1,15 +1,15 @@
 import {tempData, propsFunction} from '../../../App/appLogic';
 import type {TTableRowOfList} from '../shared/CommonLogic';
-import {data, propsSimpleListOfNovels} from '../shared/CommonLogic';
+import {propsSimpleListOfNovels} from '../shared/CommonLogic';
 
-interface INovelsList extends IRankList {
-    sectionName: string
+interface INovelsList {
+    sectionName: string,
+    nameUpdateTime: TRankListName
 }
 
-interface IRankList {
-    novels: TNovels,
-    nameUpdateTime: string
-}
+type TRankListName = keyof IRankListData;
+
+interface IRankListData {topGoodNovels: TNovels, newUpdateNovels: TNovels};
 
 type TNovels = INovel[];
 
@@ -61,12 +61,14 @@ const typeNovelsListData = [
     }
 }
 
+const rankListData = {topGoodNovels: {}, newUpdateNovels: {}} as IRankListData;
+
 const propsReviewNovels = (): void => {
     propsSimpleListOfNovels("reviewNovels", "d-flex p-short-novel");
 }
 
-const propsNovelsList = (name: string): void => {
-    const novels = tempData[name] as TNovels;
+const propsNovelsList = (name: TRankListName): void => {
+    const novels: TNovels = tempData[name];
     const numberNovels = novels.length;
     const count = numberNovels.toString().length;
     let novel: INovel;
@@ -82,13 +84,13 @@ const propsNovelsList = (name: string): void => {
     novels[1].cssRank = "rank text-r-2";
     novels[2].cssRank = "rank text-r-3";
 
-    data[name] = novels;
+    rankListData[name] = novels;
 }
 
 // propsFunction.reviewNovels = propsReviewNovels;
 // propsFunction.topGoodNovels = propsNovelsList;
 // propsFunction.newUpdateNovels = propsNovelsList;
 
-export type {INovelsList, IRankList};
-export {propsReviewNovels, propsNovelsList};
+export type {INovelsList, TRankListName};
+export {rankListData, propsReviewNovels, propsNovelsList};
 export default typeNovelsListData;

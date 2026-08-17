@@ -1,20 +1,16 @@
-import type {IShowNovels, IDescriptionNovels, INovel, ICarousels} from './mainLogic';
+import type {IShowNovels, TShowNovelsName, INovel} from './mainLogic';
+import {carouselsData, descriptionNovelsData, updatedNovelsListData, leftOfShortNovelData} from './mainLogic';
 import {TitleSection, More, SimpleListOfNovels} from '../shared/CommonUI';
-import {data, useUpdate} from '../shared/CommonLogic';
+import {useUpdate} from '../shared/CommonLogic';
 
 const Main = () => {
     return <>
         <main className="max-860-w-full col-8">
             <div className="m-content">
                 <SuggestedNovels />
-                <ShowNovels 
-                    sectionName="TRUYỆN DỊCH CHỌN LỌC" 
-                    haveTypeNovels={0} 
-                    novels={data.selectedTranslationNovels} 
-                    nameUpdateTime="selectedTranslationNovels" 
-                />
+                <ShowNovels sectionName="TRUYỆN DỊCH CHỌN LỌC" haveTypeNovels={0} nameUpdateTime="selectedTranslationNovels" />
                 <UpdatedNovels />
-                <ShowNovels sectionName="TRUYỆN FULL" haveTypeNovels={1} novels={data.fullNovels} nameUpdateTime="fullNovels" />
+                <ShowNovels sectionName="TRUYỆN FULL" haveTypeNovels={1} nameUpdateTime="fullNovels" />
                 <ShortNovels />
             </div>
         </main>
@@ -27,7 +23,9 @@ const SuggestedNovels = () => {
             <TitleSection title="TRUYỆN ĐỀ CỬ" />
             <RenderTypeNovels />
             <div id="carouselExampleControls" className="carousel slide" data-bs-ride="carousel">
-                <div className="carousel-inner"><Carousels /></div>
+                <div className="carousel-inner">
+                    <Carousels />
+                </div>
                 <button 
                 className="carousel-control-prev size-angle-icon" type="button" data-bs-target="#carouselExampleControls" 
                 data-bs-slide="prev"
@@ -48,7 +46,7 @@ const Carousels = () => {
     useUpdate("suggestedNovels");
 
     return <>
-        {(data.suggestedNovels as ICarousels).map((suggestedNovels, i) =>
+        {carouselsData.map((suggestedNovels, i) =>
             <div key={i} className={suggestedNovels.cssCarousel}>
                 <div className="d-grid grid-novel">
                     {suggestedNovels.novels.map(novel =>
@@ -68,24 +66,24 @@ const Carousels = () => {
     </>
 }
 
-const ShowNovels = ({sectionName, haveTypeNovels, novels, nameUpdateTime}: IShowNovels) => {
+const ShowNovels = ({sectionName, haveTypeNovels, nameUpdateTime}: IShowNovels) => {
     return <>
         <section className="bg-white">
             <TitleSection title={sectionName} />
             {(haveTypeNovels === 1) && <RenderTypeNovels />}
             <div className="row cols-novel row-cols-4 m-0">
-                <DescriptionNovels novels={novels} nameUpdateTime={nameUpdateTime} />
+                <DescriptionNovels nameUpdateTime={nameUpdateTime} />
             </div>
             <More title={sectionName} />
         </section>
     </>
 }
 
-const DescriptionNovels = ({novels, nameUpdateTime}: IDescriptionNovels) => {
+const DescriptionNovels = ({nameUpdateTime}: {nameUpdateTime: TShowNovelsName}) => {
     useUpdate(nameUpdateTime);
 
     return <>
-        {novels.map(novel =>
+        {descriptionNovelsData[nameUpdateTime].map(novel =>
             <div key={novel.name} className="container-novel">
                 <div>
                     <img src={novel.image} alt="" title={novel.title} />
@@ -107,7 +105,11 @@ const UpdatedNovels = () => {
     return <section className="bg-white">
         <TitleSection title={sectionName} />
         <RenderTypeNovels />
-        <table className="table table-hover table-update-novel align-middle"><tbody><UpdatedNovelsList /></tbody></table>
+        <table className="table table-hover table-update-novel align-middle">
+            <tbody>
+                <UpdatedNovelsList />
+            </tbody>
+        </table>
         <More title={sectionName} />
     </section>
 }
@@ -116,7 +118,7 @@ const UpdatedNovelsList = () => {
     useUpdate("updatedNovels");
 
     return <>
-        {(data.updatedNovels as INovel[]).map(novel => 
+        {updatedNovelsListData.map(novel => 
             <tr key={novel.name}>
                 <td className="d-flex align-items-center">
                     <a className="d-inline-block text-dark hover-t-decoration title-novel-update" title={novel.title} href="#0">
@@ -155,7 +157,7 @@ const ShortNovels = () => {
             <TitleSection title="TRUYỆN NGẮN" />
             <div className="d-flex flex-wrap col-short-novel row-cols-2 pb-shorts-novel">
                 <LeftOfShortNovels />
-                <SimpleListOfNovels novels={data.rightOfShortNovels} nameUpdateTime="rightOfShortNovels" />
+                <SimpleListOfNovels nameUpdateTime="rightOfShortNovels" />
             </div>
         </section>
     </>
@@ -166,12 +168,12 @@ const LeftOfShortNovels = () => {
 
     return <>
         <div className="position-relative">
-            <img src={data.leftOfShortNovel.image} alt="" title={data.leftOfShortNovel.title} />
+            <img src={leftOfShortNovelData.image} alt="" title={leftOfShortNovelData.title} />
             <a 
                 className="d-inline-block text-white hover-t-decoration position-absolute start-0 end-0 bottom-0 p-above" 
-                title={data.leftOfShortNovel.title} 
+                title={leftOfShortNovelData.title} 
                 href="#0"
-            >{data.leftOfShortNovel.title}</a>
+            >{leftOfShortNovelData.title}</a>
         </div>
     </>
 }

@@ -1,9 +1,9 @@
 import {tempData, propsFunction} from '../../../App/appLogic';
-import {data} from '../shared/CommonLogic';
 
 type ParagraphText = (string | MarkerTitle)[];
 interface MarkerTitle {title: string, marker: string};
 
+let trendNovelsInMonthData: string[];
 
 const text1: ParagraphText = [
     "Website ", {title: "đọc truyện online", marker: "đọc truyện"}, " online chất lượng hàng đầu Việt Nam, với nhiều ", 
@@ -20,10 +20,10 @@ const text2: ParagraphText = [
 ];
 
 const propsTrendNovelsInMonth = () => {
-    data.trendNovelsInMonth = tempData.trendNovelsInMonth;
+    trendNovelsInMonthData = tempData.trendNovelsInMonth;
 }
 
 // propsFunction.trendNovelsInMonth = propsTrendNovelsInMonth;
 
 export type {ParagraphText, MarkerTitle};
-export {text1, text2, propsTrendNovelsInMonth};
+export {trendNovelsInMonthData, text1, text2, propsTrendNovelsInMonth};

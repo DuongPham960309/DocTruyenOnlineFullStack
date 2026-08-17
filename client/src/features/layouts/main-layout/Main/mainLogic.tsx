@@ -1,15 +1,17 @@
 import {tempData, propsFunction} from '../../../App/appLogic';
-import {data, propsSimpleListOfNovels} from '../shared/CommonLogic';
+import {propsSimpleListOfNovels} from '../shared/CommonLogic';
 
-interface IShowNovels extends IDescriptionNovels {
+interface IShowNovels {
   sectionName: string, 
   haveTypeNovels: number, 
+  nameUpdateTime: TShowNovelsName
 }
 
-interface IDescriptionNovels {
-  novels: INovel[], 
-  nameUpdateTime: string
-}
+type TShowNovelsName = keyof IDescriptionNovelsData;
+
+interface IDescriptionNovelsData {selectedTranslationNovels: TNovels, fullNovels: TNovels};
+
+type TNovels = INovel[];
 
 interface INovel {
   image: string,
@@ -22,15 +24,18 @@ interface INovel {
   time: string
 }
 
-type ICarousels = {cssCarousel: string, novels: INovel[]}[];
+let carouselsData: {cssCarousel: string, novels: TNovels}[];
+const descriptionNovelsData = {selectedTranslationNovels: {}, fullNovels: {}} as IDescriptionNovelsData;
+let updatedNovelsListData: TNovels;
+let leftOfShortNovelData: {image: string, title: string};
 
 const propsSuggestedNovels = () => {
-  const suggestedNovels = tempData.suggestedNovels;
+  const suggestedNovels: TNovels = tempData.suggestedNovels;
   let length = Math.ceil(suggestedNovels.length/3);
-  const carousels = new Array(length) as ICarousels;
+  carouselsData = new Array(length);
 
   for (let i = 0; i < length; i++) {
-    carousels[i] = {cssCarousel: "carousel-item", novels: []};
+    carouselsData[i] = {cssCarousel: "carousel-item", novels: []};
   }
 
   length = suggestedNovels.length;
@@ -38,36 +43,34 @@ const propsSuggestedNovels = () => {
   for (let i = 0; i < length; i++) {
     suggestedNovels[i].image = require(`../../assets/images/${suggestedNovels[i].image}`);
     titleNovel(suggestedNovels[i]);
-    carousels[Math.floor(i/3)].novels.push(suggestedNovels[i]);
+    carouselsData[Math.floor(i/3)].novels.push(suggestedNovels[i]);
   }
 
-  carousels[0].cssCarousel = "carousel-item active";
-
-  data.suggestedNovels = carousels;
+  carouselsData[0].cssCarousel = "carousel-item active";
 }
 
 const titleNovel = (novel: INovel): void => {
   novel.title = [novel.before, novel.name, novel.after].filter(Boolean).join(" ");
 }
 
-const propsShowNovels = (name: string) => {
+const propsShowNovels = (name: TShowNovelsName) => {
   for (const novel of tempData[name]) {
     novel.image = require(`../../assets/images/${novel.image}`);
     titleNovel(novel);
   }
 
-  data[name] = tempData[name];
+  descriptionNovelsData[name] = tempData[name];
 }
 
 const propsUpdatedNovels = () => {
-  const updatedNovels = tempData.updatedNovels;
-  updatedNovels.forEach(titleNovel);
+  updatedNovelsListData = tempData.updatedNovels;
+  updatedNovelsListData.forEach(titleNovel);
 
   const currentTime = new Date("2023-11-11T09:00:00Z");
 
-  for (const updatedNovel of updatedNovels)
+  for (const updatedNovel of updatedNovelsListData)
   {
-    let lastTime = new Date(updatedNovel.last_time);
+    let lastTime = new Date((updatedNovel as any).last_time);
     let millisecondsDelta = currentTime.getTime() - lastTime.getTime();
     let time = Math.floor(millisecondsDelta/86400000);
 
@@ -89,15 +92,12 @@ const propsUpdatedNovels = () => {
       }
     }
   }
-
-  data.updatedNovels = updatedNovels;
 }
 
 const propsLeftOfShortNovel = () => {
-  const leftOfShortNovel = tempData.leftOfShortNovel;
+  leftOfShortNovelData = tempData.leftOfShortNovel;
 
-  leftOfShortNovel.image = require(`../../assets/images/${leftOfShortNovel.image}`);
-  data.leftOfShortNovel = leftOfShortNovel;
+  leftOfShortNovelData.image = require(`../../assets/images/${leftOfShortNovelData.image}`);
 }
 
 const propsRightOfShortNovels = () => {
@@ -111,5 +111,15 @@ const propsRightOfShortNovels = () => {
 // propsFunction.leftOfShortNovel = propsLeftOfShortNovel;
 // propsFunction.rightOfShortNovels = propsRightOfShortNovels;
 
-export type {IShowNovels, IDescriptionNovels, INovel, ICarousels};
-export {propsSuggestedNovels, propsShowNovels, propsUpdatedNovels, propsLeftOfShortNovel, propsRightOfShortNovels};
+export type {IShowNovels, TShowNovelsName, INovel};
+export {
+  carouselsData, 
+  descriptionNovelsData, 
+  updatedNovelsListData, 
+  leftOfShortNovelData, 
+  propsSuggestedNovels, 
+  propsShowNovels, 
+  propsUpdatedNovels, 
+  propsLeftOfShortNovel, 
+  propsRightOfShortNovels
+};

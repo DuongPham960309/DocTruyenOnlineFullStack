@@ -1,15 +1,15 @@
-import type {INovelsList, IRankList} from './asideLogic';
-import typeNovelsListData from './asideLogic';
+import type {INovelsList, TRankListName} from './asideLogic';
+import typeNovelsListData, {rankListData} from './asideLogic';
 import {TitleSection, TableOfList, SimpleListOfNovels, More} from '../shared/CommonUI';
-import {data, useUpdate} from '../shared/CommonLogic';
+import {useUpdate} from '../shared/CommonLogic';
 
 const Aside = () => {
     return <aside className="max-860-w-full col-4">
         <div className="m-content">
             <TypeNovelsList />
             <ReviewNovels />
-            <NovelsList sectionName="TOP TRUYỆN HAY" novels={data.topGoodNovels} nameUpdateTime='topGoodNovels' />
-            <NovelsList sectionName="TRUYỆN MỚI ĐĂNG" novels={data.newUpdateNovels} nameUpdateTime='newUpdateNovels' />
+            <NovelsList sectionName="TOP TRUYỆN HAY" nameUpdateTime='topGoodNovels' />
+            <NovelsList sectionName="TRUYỆN MỚI ĐĂNG" nameUpdateTime='newUpdateNovels' />
         </div>
     </aside>
 }
@@ -29,29 +29,29 @@ const ReviewNovels = () => {
     return <>
         <section className="bg-white review-novel">
             <TitleSection title={sectionName} />
-            <SimpleListOfNovels novels={data.reviewNovels} nameUpdateTime="reviewNovels" />
+            <SimpleListOfNovels nameUpdateTime="reviewNovels" />
             <More title={sectionName} />
         </section>
     </>
 }
 
-const NovelsList = ({sectionName, novels, nameUpdateTime}: INovelsList) => {
+const NovelsList = ({sectionName, nameUpdateTime}: INovelsList) => {
     return <section className="bg-white">
         <TitleSection title={sectionName} />
         <table className="table top-list">
             <tbody>
-                <RankList novels={novels} nameUpdateTime={nameUpdateTime} />
+                <RankList nameUpdateTime={nameUpdateTime} />
             </tbody>
         </table>
         <More title={sectionName} />
     </section>
 }
 
-const RankList = ({novels, nameUpdateTime}: IRankList) => {
+const RankList = ({nameUpdateTime}: {nameUpdateTime: TRankListName}) => {
     useUpdate(nameUpdateTime);
 
     return <>
-        {novels.map(novel =>
+        {rankListData[nameUpdateTime].map(novel =>
             <tr key={novel.title}>
                 <td className={novel.cssRank}>{novel.rank}</td>
                 <td>
