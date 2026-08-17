@@ -31,7 +31,7 @@ const propsSimpleListOfNovels = (name: string, cssContainer: string): void => {
   const novels = tempData[name];
 
   for (const novel of novels) {
-    novel.image = require(`./../../../../assets/images/${novel.image}`);
+    novel.image = require(`../../assets/images/${novel.image}`);
     novel.cssContainer = cssContainer;
   }
 

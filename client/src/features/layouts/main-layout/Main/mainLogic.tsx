@@ -36,7 +36,7 @@ const propsSuggestedNovels = () => {
   length = suggestedNovels.length;
 
   for (let i = 0; i < length; i++) {
-    suggestedNovels[i].image = require(`./../../../../assets/images/${suggestedNovels[i].image}`);
+    suggestedNovels[i].image = require(`../../assets/images/${suggestedNovels[i].image}`);
     titleNovel(suggestedNovels[i]);
     carousels[Math.floor(i/3)].novels.push(suggestedNovels[i]);
   }
@@ -52,7 +52,7 @@ const titleNovel = (novel: INovel): void => {
 
 const propsShowNovels = (name: string) => {
   for (const novel of tempData[name]) {
-    novel.image = require(`./../../../../assets/images/${novel.image}`);
+    novel.image = require(`../../assets/images/${novel.image}`);
     titleNovel(novel);
   }
 
@@ -96,7 +96,7 @@ const propsUpdatedNovels = () => {
 const propsLeftOfShortNovel = () => {
   const leftOfShortNovel = tempData.leftOfShortNovel;
 
-  leftOfShortNovel.image = require(`./../../../../assets/images/${leftOfShortNovel.image}`);
+  leftOfShortNovel.image = require(`../../assets/images/${leftOfShortNovel.image}`);
   data.leftOfShortNovel = leftOfShortNovel;
 }
 
