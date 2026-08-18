@@ -14,9 +14,9 @@ type TTableRowOfList = {
 
 type SimpleListName = keyof ISimpleNovelsData;
 
-interface ISimpleNovelsData {reviewNovels: simpleNovels, rightOfShortNovels: simpleNovels};
+interface ISimpleNovelsData {reviewNovels: TSimpleNovels, rightOfShortNovels: TSimpleNovels};
 
-type simpleNovels = {
+type TSimpleNovels = {
   title: string,
   cssContainer: string,
   image: any
@@ -28,16 +28,14 @@ const useUpdate = (name: string): void => {
   [, setLastUpdatedTime[name]] = useState(lastUpdatedTime[name]);
 }
 
-const propsSimpleListOfNovels = (name: SimpleListName, cssContainer: string): void => {
-  const novels = tempData[name] as simpleNovels;
-
-  for (const novel of novels) {
+const propsSimpleListOfNovels = (tempData: TSimpleNovels, name: SimpleListName, cssContainer: string): void => {
+  for (const novel of tempData) {
     novel.image = require(`../../assets/images/${novel.image}`);
     novel.cssContainer = cssContainer;
   }
 
-  simpleNovelsData[name] = novels;
+  simpleNovelsData[name] = tempData;
 }
 
-export type {TTableRowOfList, SimpleListName};
+export type {TTableRowOfList, SimpleListName, TSimpleNovels};
 export {simpleNovelsData, useUpdate, propsSimpleListOfNovels};

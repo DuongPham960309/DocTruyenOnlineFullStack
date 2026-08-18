@@ -1,4 +1,4 @@
-import {tempData, propsFunction} from '../../../App/appLogic';
+import {propsFunction} from '../../../App/appLogic';
 
 type ParagraphText = (string | MarkerTitle)[];
 interface MarkerTitle {title: string, marker: string};
@@ -19,8 +19,8 @@ const text2: ParagraphText = [
   {title: "Privacy agreement", marker: "Thỏa thuận quyền riêng tư"}
 ];
 
-const propsTrendNovelsInMonth = (): void => {
-  trendNovelsInMonthData = tempData.trendNovelsInMonth;
+const propsTrendNovelsInMonth = (trendNovelsInMonth: string[]): void => {
+  trendNovelsInMonthData = trendNovelsInMonth;
 }
 
 // propsFunction.trendNovelsInMonth = propsTrendNovelsInMonth;

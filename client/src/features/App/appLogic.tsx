@@ -48,7 +48,7 @@ const requestData = () => {
 
     for (let section in updatedTime) {
       if (updatedTime[section] !== lastUpdatedTime[section]) {
-        propsFunction[section](section);
+        propsFunction[section](tempData[section], section);
         setLastUpdatedTime[section](updatedTime[section]);
       }
     }
@@ -70,7 +70,7 @@ const requestData = () => {
   tempData = json.data;
 
   for (let section in json.lastUpdatedTime) {
-    propsFunction[section](section);
+    propsFunction[section](tempData[section], section);
   }
 
   for (let section in json.lastUpdatedTime) {//create to check update data, it will be delete when app is deployed
