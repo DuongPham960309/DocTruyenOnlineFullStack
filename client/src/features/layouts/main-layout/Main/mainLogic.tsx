@@ -29,7 +29,7 @@ const descriptionNovelsData = {selectedTranslationNovels: {}, fullNovels: {}} as
 let updatedNovelsListData: TNovels;
 let leftOfShortNovelData: {image: string, title: string};
 
-const propsSuggestedNovels = () => {
+const propsSuggestedNovels = (): void => {
   const suggestedNovels: TNovels = tempData.suggestedNovels;
   let length = Math.ceil(suggestedNovels.length/3);
   carouselsData = new Array(length);
@@ -53,7 +53,7 @@ const titleNovel = (novel: INovel): void => {
   novel.title = [novel.before, novel.name, novel.after].filter(Boolean).join(" ");
 }
 
-const propsShowNovels = (name: TShowNovelsName) => {
+const propsShowNovels = (name: TShowNovelsName): void => {
   for (const novel of tempData[name]) {
     novel.image = require(`../../assets/images/${novel.image}`);
     titleNovel(novel);
@@ -62,7 +62,7 @@ const propsShowNovels = (name: TShowNovelsName) => {
   descriptionNovelsData[name] = tempData[name];
 }
 
-const propsUpdatedNovels = () => {
+const propsUpdatedNovels = (): void => {
   updatedNovelsListData = tempData.updatedNovels;
   updatedNovelsListData.forEach(titleNovel);
 
@@ -94,13 +94,13 @@ const propsUpdatedNovels = () => {
   }
 }
 
-const propsLeftOfShortNovel = () => {
+const propsLeftOfShortNovel = (): void => {
   leftOfShortNovelData = tempData.leftOfShortNovel;
 
   leftOfShortNovelData.image = require(`../../assets/images/${leftOfShortNovelData.image}`);
 }
 
-const propsRightOfShortNovels = () => {
+const propsRightOfShortNovels = (): void => {
   propsSimpleListOfNovels("rightOfShortNovels", "d-flex pb-short-novel");
 }
 

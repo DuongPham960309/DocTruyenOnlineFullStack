@@ -10,18 +10,18 @@ import Aside from '../layouts/main-layout/Aside/AsideUI';
 import Footer from '../layouts/main-layout/Footer/FooterUI';
 
 function App() {
-    return <>
-        <Header />
-        <div className="content">
-            <div className="max-width-main mx-auto">
-                <div className="d-flex flex-wrap mh-content-negative">
-                    <Main />
-                    <Aside />
-                </div>
-            </div>
+  return <>
+    <Header />
+    <div className="content">
+      <div className="max-width-main mx-auto">
+        <div className="d-flex flex-wrap mh-content-negative">
+          <Main />
+          <Aside />
         </div>
-        <Footer />
-    </>
+      </div>
+    </div>
+    <Footer />
+  </>
 }
 
 export default App;
