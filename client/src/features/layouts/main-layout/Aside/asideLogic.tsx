@@ -1,6 +1,5 @@
 import {propsFunction} from '../../../App/appLogic';
-import type {TTableRowOfList, TSimpleNovels} from '../shared/CommonLogic';
-import {propsSimpleListOfNovels} from '../shared/CommonLogic';
+import type {TTableRowOfList} from '../shared/CommonLogic';
 
 interface INovelsList {
   sectionName: string,
@@ -80,10 +79,6 @@ const typeNovelsListData = [
 
 const rankListData = {topGoodNovels: {}, newUpdateNovels: {}} as IRankListData;
 
-const propsReviewNovels = (simpleNovels: TSimpleNovels): void => {
-  propsSimpleListOfNovels(simpleNovels, "reviewNovels", "d-flex p-short-novel");
-}
-
 const propsNovelsList = (novels: TNovels, name: TRankListName): void => {
   const numberNovels = novels.length;
   const count = numberNovels.toString().length;
@@ -108,5 +103,5 @@ const propsNovelsList = (novels: TNovels, name: TRankListName): void => {
 // propsFunction.newUpdateNovels = propsNovelsList;
 
 export type {INovelsList, TRankListName};
-export {rankListData, propsReviewNovels, propsNovelsList};
+export {rankListData, propsNovelsList};
 export default typeNovelsListData;

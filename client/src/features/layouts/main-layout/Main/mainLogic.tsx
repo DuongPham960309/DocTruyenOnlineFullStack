@@ -1,6 +1,5 @@
 import {propsFunction} from '../../../App/appLogic';
-import type {TSimpleNovels} from '../shared/CommonLogic';
-import {propsSimpleListOfNovels} from '../shared/CommonLogic';
+import {SimpleNovels} from '../shared/CommonLogic';
 
 interface IShowNovels {
   sectionName: string, 
@@ -25,12 +24,12 @@ interface INovel {
   time: string
 }
 
-interface ILeftOfShortNovel {image: string, title: string};
+// interface ILeftOfShortNovel {image: string, title: string};
 
 let carouselsData: {cssCarousel: string, novels: TNovels}[];
 const descriptionNovelsData = {selectedTranslationNovels: {}, fullNovels: {}} as IDescriptionNovelsData;
 let updatedNovelsListData: TNovels;
-let leftOfShortNovelData: ILeftOfShortNovel;
+let leftOfShortNovelData: SimpleNovels;
 
 const propsSuggestedNovels = (suggestedNovels: TNovels): void => {
   let length = Math.ceil(suggestedNovels.length/3);
@@ -96,14 +95,10 @@ const propsUpdatedNovels = (updatedNovelsList: TNovels): void => {
   }
 }
 
-const propsLeftOfShortNovel = (leftOfShortNovel: ILeftOfShortNovel): void => {
+const propsLeftOfShortNovel = (leftOfShortNovel: SimpleNovels): void => {
   leftOfShortNovelData = leftOfShortNovel;
 
   leftOfShortNovelData.image = require(`../../assets/images/${leftOfShortNovelData.image}`);
-}
-
-const propsRightOfShortNovels = (simpleNovels: TSimpleNovels): void => {
-  propsSimpleListOfNovels(simpleNovels, "rightOfShortNovels", "d-flex pb-short-novel");
 }
 
 // propsFunction.suggestedNovels = propsSuggestedNovels;
@@ -122,6 +117,5 @@ export {
   propsSuggestedNovels, 
   propsShowNovels, 
   propsUpdatedNovels, 
-  propsLeftOfShortNovel, 
-  propsRightOfShortNovels
+  propsLeftOfShortNovel
 };

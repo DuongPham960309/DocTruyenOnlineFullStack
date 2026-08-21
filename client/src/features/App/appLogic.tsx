@@ -1,8 +1,9 @@
 import loadSecretKey from '../../assets/wasm/SecretKey';
-import {propsSuggestedNovels, propsShowNovels, propsUpdatedNovels, propsLeftOfShortNovel, propsRightOfShortNovels} from 
+import {propsSuggestedNovels, propsShowNovels, propsUpdatedNovels, propsLeftOfShortNovel} from 
 '../layouts/main-layout/Main/mainLogic';
-import {propsReviewNovels, propsNovelsList} from '../layouts/main-layout/Aside/asideLogic';
+import {propsNovelsList} from '../layouts/main-layout/Aside/asideLogic';
 import {propsTrendNovelsInMonth} from '../layouts/main-layout/Footer/footerLogic';
+import {propsSimpleListOfNovels} from '../layouts/main-layout/shared/CommonLogic';
 
 let tempData: any = {};
 let lastUpdatedTime: any = {};
@@ -13,9 +14,15 @@ let setLastUpdatedTime: any = {
 };
 
 const propsFunction: any = {
-  suggestedNovels: propsSuggestedNovels, selectedTranslationNovels: propsShowNovels, updatedNovels: propsUpdatedNovels, 
-  fullNovels: propsShowNovels, leftOfShortNovel: propsLeftOfShortNovel, rightOfShortNovels: propsRightOfShortNovels, 
-  reviewNovels: propsReviewNovels, topGoodNovels: propsNovelsList, newUpdateNovels: propsNovelsList, 
+  suggestedNovels: propsSuggestedNovels, 
+  selectedTranslationNovels: propsShowNovels, 
+  updatedNovels: propsUpdatedNovels, 
+  fullNovels: propsShowNovels, 
+  leftOfShortNovel: propsLeftOfShortNovel, 
+  rightOfShortNovels: propsSimpleListOfNovels, 
+  reviewNovels: propsSimpleListOfNovels, 
+  topGoodNovels: propsNovelsList, 
+  newUpdateNovels: propsNovelsList, 
   trendNovelsInMonth: propsTrendNovelsInMonth
 };
 
@@ -49,7 +56,8 @@ const requestData = () => {
     for (let section in updatedTime) {
       if (updatedTime[section] !== lastUpdatedTime[section]) {
         propsFunction[section](tempData[section], section);
-        setLastUpdatedTime[section](updatedTime[section]);
+        // setLastUpdatedTime[section](updatedTime[section]);
+        setLastUpdatedTime[section]();
       }
     }
 
@@ -82,4 +90,4 @@ const requestData = () => {
 
 setTimeout(requestData, 10000);
 
-export {tempData, lastUpdatedTime, setLastUpdatedTime, propsFunction};
+export {tempData, setLastUpdatedTime, propsFunction};

@@ -41,13 +41,13 @@ const More = ({title}: {title: string}) => {
   </>
 }
 
-const SimpleListOfNovels = ({nameUpdateTime}: {nameUpdateTime: SimpleListName}) => {
+const SimpleListOfNovels = ({nameUpdateTime, cssContainer}: {nameUpdateTime: SimpleListName, cssContainer: string}) => {
   useUpdate(nameUpdateTime);
 
   return <>
     <div className="right-novel">
       {simpleNovelsData[nameUpdateTime].map(novel =>
-        <div key={novel.title} className={novel.cssContainer}>
+        <div key={novel.title} className={cssContainer}>
           <img src={novel.image} alt="" title={novel.title} />
           <a className="text-dark hover-t-decoration" title={novel.title} href="#0">{novel.title}</a>
         </div>

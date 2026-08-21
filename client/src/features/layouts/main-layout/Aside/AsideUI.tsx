@@ -31,7 +31,7 @@ const ReviewNovels = () => {
   return <>
     <section className="bg-white review-novel">
       <TitleSection title={sectionName} />
-      <SimpleListOfNovels nameUpdateTime="reviewNovels" />
+      <SimpleListOfNovels nameUpdateTime="reviewNovels" cssContainer='d-flex p-short-novel' />
       <More title={sectionName} />
     </section>
   </>

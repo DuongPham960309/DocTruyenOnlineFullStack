@@ -161,7 +161,7 @@ const ShortNovels = () => {
       <TitleSection title="TRUYỆN NGẮN" />
       <div className="d-flex flex-wrap col-short-novel row-cols-2 pb-shorts-novel">
         <LeftOfShortNovels />
-        <SimpleListOfNovels nameUpdateTime="rightOfShortNovels" />
+        <SimpleListOfNovels nameUpdateTime="rightOfShortNovels" cssContainer='d-flex pb-short-novel' />
       </div>
     </section>
   </>
