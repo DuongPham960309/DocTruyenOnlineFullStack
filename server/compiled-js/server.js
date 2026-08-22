@@ -4,6 +4,7 @@ import mysql from 'mysql2/promise';
 import 'dotenv/config';
 import rateLimit from 'express-rate-limit';
 import crypto from 'crypto';
+import path from 'path';
 const app = express();
 const env = process.env;
 env.MYSQL_PORT = Number(env.MYSQL_PORT);
@@ -49,15 +50,18 @@ app.use(cors({
 app.use(verifyRequest);
 app.use(rateLimit({
     windowMs: 15 * 60 * 1000,
-    max: 500,
+    // max: 500,
+    max: 10000,
     message: "Quá nhiều yêu cầu từ IP này, vui lòng thử lại sau 1 phút.",
     standardHeaders: true,
     legacyHeaders: false
 }));
 app.use(express.json());
+app.use('/assets', express.static(path.join(process.cwd(), 'images')));
 function verifyRequest(request, response, next) {
     const serverTime = Date.now();
-    const [clientSignature, clientTime] = getClientSignatureAndTimeMS(request.get('x-key'));
+    const xKey = (request.get('x-key') || request.query['x-key']);
+    const [clientSignature, clientTime] = getClientSignatureAndTimeMS(xKey);
     const timeDifference = Math.abs(serverTime - clientTime);
     const serverSignature = crypto
         .createHash('sha256')

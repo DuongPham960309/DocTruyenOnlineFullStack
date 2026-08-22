@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 
-import {tempData, setLastUpdatedTime} from '../../../App/appLogic';
+import {tempData, setLastUpdatedTime, getImageUrl} from '../../../App/appLogic';
 
 type TTableRowOfList = {
   type: string, 
@@ -20,7 +20,7 @@ type TSimpleNovels = SimpleNovels[];
 
 interface SimpleNovels {
   title: string,
-  image: any
+  image: string
 };
 
 const simpleNovelsData = {reviewNovels: {}, rightOfShortNovels: {}} as ISimpleNovelsData;
@@ -35,7 +35,7 @@ const useUpdate = (name: string): void => {
 
 const propsSimpleListOfNovels = (tempData: TSimpleNovels, name: SimpleListName): void => {
   for (const novel of tempData) {
-    novel.image = require(`../../assets/images/${novel.image}`);
+    novel.image = getImageUrl(novel.image);
   }
 
   simpleNovelsData[name] = tempData;

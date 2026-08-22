@@ -1,10 +1,11 @@
-import express from 'express';
 import type {Request, Response, NextFunction} from 'express';
+import express from 'express';
 import cors from 'cors';
 import mysql from 'mysql2/promise';
 import 'dotenv/config';
 import rateLimit from 'express-rate-limit';
 import crypto from 'crypto';
+import path from 'path';
 
 import type {Home, SectionsStringValue, SectionData, ShortNovelFormat} from './types.js';
 
@@ -70,18 +71,21 @@ app.use(verifyRequest);
 
 app.use(rateLimit({
     windowMs: 15*60*1000,
-    max: 500,
+    // max: 500,
+    max: 10000,
     message: "Quá nhiều yêu cầu từ IP này, vui lòng thử lại sau 1 phút.",
     standardHeaders: true,
     legacyHeaders: false
 }));
 
 app.use(express.json());
+app.use('/assets', express.static(path.join(process.cwd(), 'images')));
 
 function verifyRequest(request: Request, response: Response, next: NextFunction) {
     const serverTime = Date.now();
 
-    const [clientSignature, clientTime] = getClientSignatureAndTimeMS(request.get('x-key') as string);
+    const xKey = (request.get('x-key') || request.query['x-key']) as string;
+    const [clientSignature, clientTime] = getClientSignatureAndTimeMS(xKey);
     
     const timeDifference = Math.abs(serverTime - clientTime);
     

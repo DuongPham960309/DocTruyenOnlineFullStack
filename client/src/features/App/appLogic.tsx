@@ -28,10 +28,6 @@ const propsFunction: any = {
 
 const secretKeyInstance: any = await loadSecretKey();
 
-const getKey = (): string => {
-  return secretKeyInstance.UTF8ToString(secretKeyInstance._createSecretKey());
-}
-
 let count = 1;//create to check update data, it will be delete when app is deployed
 const requestData = () => {
   fetch("http://localhost:4000/data", {
@@ -56,7 +52,6 @@ const requestData = () => {
     for (let section in updatedTime) {
       if (updatedTime[section] !== lastUpdatedTime[section]) {
         propsFunction[section](tempData[section], section);
-        // setLastUpdatedTime[section](updatedTime[section]);
         setLastUpdatedTime[section]();
       }
     }
@@ -64,6 +59,14 @@ const requestData = () => {
     lastUpdatedTime = json.lastUpdatedTime;
     setTimeout(requestData, 5000);
   });
+}
+
+const getKey = (): string => {
+  return secretKeyInstance.UTF8ToString(secretKeyInstance._createSecretKey());
+}
+
+const getImageUrl = (imageName: string): string => {
+  return `http://localhost:4000/assets/${imageName}?x-key=${getKey()}`;
 }
 
 {
@@ -90,4 +93,4 @@ const requestData = () => {
 
 setTimeout(requestData, 10000);
 
-export {tempData, setLastUpdatedTime, propsFunction};
+export {tempData, setLastUpdatedTime, propsFunction, getImageUrl};

@@ -1,4 +1,4 @@
-import {propsFunction} from '../../../App/appLogic';
+import {propsFunction, getImageUrl} from '../../../App/appLogic';
 import {SimpleNovels} from '../shared/CommonLogic';
 
 interface IShowNovels {
@@ -24,8 +24,6 @@ interface INovel {
   time: string
 }
 
-// interface ILeftOfShortNovel {image: string, title: string};
-
 let carouselsData: {cssCarousel: string, novels: TNovels}[];
 const descriptionNovelsData = {selectedTranslationNovels: {}, fullNovels: {}} as IDescriptionNovelsData;
 let updatedNovelsListData: TNovels;
@@ -42,7 +40,7 @@ const propsSuggestedNovels = (suggestedNovels: TNovels): void => {
   length = suggestedNovels.length;
 
   for (let i = 0; i < length; i++) {
-    suggestedNovels[i].image = require(`../../assets/images/${suggestedNovels[i].image}`);
+    suggestedNovels[i].image = getImageUrl(suggestedNovels[i].image);
     titleNovel(suggestedNovels[i]);
     carouselsData[Math.floor(i/3)].novels.push(suggestedNovels[i]);
   }
@@ -56,7 +54,7 @@ const titleNovel = (novel: INovel): void => {
 
 const propsShowNovels = (novels: TNovels, name: TShowNovelsName): void => {
   for (const novel of novels) {
-    novel.image = require(`../../assets/images/${novel.image}`);
+    novel.image = getImageUrl(novel.image);
     titleNovel(novel);
   }
 
@@ -98,7 +96,7 @@ const propsUpdatedNovels = (updatedNovelsList: TNovels): void => {
 const propsLeftOfShortNovel = (leftOfShortNovel: SimpleNovels): void => {
   leftOfShortNovelData = leftOfShortNovel;
 
-  leftOfShortNovelData.image = require(`../../assets/images/${leftOfShortNovelData.image}`);
+  leftOfShortNovelData.image = getImageUrl(leftOfShortNovelData.image);
 }
 
 // propsFunction.suggestedNovels = propsSuggestedNovels;
