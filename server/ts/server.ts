@@ -122,7 +122,7 @@ const getClientSignatureAndTimeMS = (key: string): [string, number] => {
     return [clientSignature, timeMS];
 }
 
-app.get('/data', async (req, res) => {
+app.get('/data', async (request: Request, response: Response) => {
     const queriedData = {lastUpdatedTime: {}, data: {}} as Home;
     const data = queriedData.data;
 
@@ -132,7 +132,7 @@ app.get('/data', async (req, res) => {
     data.leftOfShortNovel = (data.leftOfShortNovel as unknown as [ShortNovelFormat])[0];
     data.trendNovelsInMonth = (data.trendNovelsInMonth as unknown as {name: string}[]).map(row => row.name);
 
-    res.json(queriedData);
+    response.json(queriedData);
 });
 
 const getLastUpdatedTime = async (lastUpdatedTime: SectionsStringValue) => {
@@ -157,8 +157,8 @@ const queryOfGetMethod = async <SectionName extends keyof SectionData>(data: Sec
     }
 }
 
-app.post('/data', async (req, res) => {
-    const updatedTime: SectionsStringValue = req.body;
+app.post('/data', async (request: Request, response: Response) => {
+    const updatedTime: SectionsStringValue = request.body;
     const queriedData = {lastUpdatedTime: {}, data: {}} as Home;
     const data = queriedData.data;
     let lastUpdatedTime = queriedData.lastUpdatedTime;
@@ -174,7 +174,7 @@ app.post('/data', async (req, res) => {
         data.trendNovelsInMonth = (data.trendNovelsInMonth as unknown as {name: string}[]).map(row => row.name);
     }
 
-    res.json(queriedData);
+    response.json(queriedData);
 });
 
 const queryOfPostMethod = async <SectionName extends keyof SectionsStringValue>(

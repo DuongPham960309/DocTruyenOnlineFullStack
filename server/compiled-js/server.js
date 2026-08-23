@@ -90,14 +90,14 @@ const getClientSignatureAndTimeMS = (key) => {
     const timeMS = Number(inverted ^ secretHex);
     return [clientSignature, timeMS];
 };
-app.get('/data', async (req, res) => {
+app.get('/data', async (request, response) => {
     const queriedData = { lastUpdatedTime: {}, data: {} };
     const data = queriedData.data;
     await getLastUpdatedTime(queriedData.lastUpdatedTime);
     await Promise.all(sectionNames.map(sectionName => queryOfGetMethod(data, sectionName)));
     data.leftOfShortNovel = data.leftOfShortNovel[0];
     data.trendNovelsInMonth = data.trendNovelsInMonth.map(row => row.name);
-    res.json(queriedData);
+    response.json(queriedData);
 });
 const getLastUpdatedTime = async (lastUpdatedTime) => {
     try {
@@ -118,8 +118,8 @@ const queryOfGetMethod = async (data, property) => {
         console.error(`\x1b[31m ${property}: ${error}\x1b[0m`);
     }
 };
-app.post('/data', async (req, res) => {
-    const updatedTime = req.body;
+app.post('/data', async (request, response) => {
+    const updatedTime = request.body;
     const queriedData = { lastUpdatedTime: {}, data: {} };
     const data = queriedData.data;
     let lastUpdatedTime = queriedData.lastUpdatedTime;
@@ -131,7 +131,7 @@ app.post('/data', async (req, res) => {
     if (updatedTime.trendNovelsInMonth !== lastUpdatedTime.trendNovelsInMonth) {
         data.trendNovelsInMonth = data.trendNovelsInMonth.map(row => row.name);
     }
-    res.json(queriedData);
+    response.json(queriedData);
 });
 const queryOfPostMethod = async (updatedTime, property, queriedData) => {
     if (updatedTime[property] !== queriedData.lastUpdatedTime[property]) {
