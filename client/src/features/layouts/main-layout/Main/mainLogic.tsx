@@ -1,15 +1,7 @@
-import {propsFunction, getImageUrl} from '../../../App/appLogic';
-import {SimpleNovels} from '../shared/CommonLogic';
+import {getImageUrl} from '../../../App/appLogic';
+import {SectionDeclaration, SimpleNovel} from '../shared/CommonLogic';
 
-interface IShowNovels {
-  sectionName: string, 
-  haveTypeNovels: number, 
-  nameUpdateTime: TShowNovelsName
-}
-
-type TShowNovelsName = keyof IDescriptionNovelsData;
-
-interface IDescriptionNovelsData {selectedTranslationNovels: TNovels, fullNovels: TNovels};
+type TCarousels = {cssCarousel: string, novels: TNovels}[];
 
 type TNovels = INovel[];
 
@@ -24,96 +16,84 @@ interface INovel {
   time: string
 }
 
-let carouselsData: {cssCarousel: string, novels: TNovels}[];
-const descriptionNovelsData = {selectedTranslationNovels: {}, fullNovels: {}} as IDescriptionNovelsData;
-let updatedNovelsListData: TNovels;
-let leftOfShortNovelData: SimpleNovels;
-
-const propsSuggestedNovels = (suggestedNovels: TNovels): void => {
-  let length = Math.ceil(suggestedNovels.length/3);
-  carouselsData = new Array(length);
-
-  for (let i = 0; i < length; i++) {
-    carouselsData[i] = {cssCarousel: "carousel-item", novels: []};
-  }
-
-  length = suggestedNovels.length;
-
-  for (let i = 0; i < length; i++) {
-    suggestedNovels[i].image = getImageUrl(suggestedNovels[i].image);
-    titleNovel(suggestedNovels[i]);
-    carouselsData[Math.floor(i/3)].novels.push(suggestedNovels[i]);
-  }
-
-  carouselsData[0].cssCarousel = "carousel-item active";
+interface IShowNovels extends SectionDeclaration {
+  haveNovelTypes: boolean
 }
 
-const titleNovel = (novel: INovel): void => {
+const getCarousels = (novels: TNovels): TCarousels => {
+  let length = Math.ceil(novels.length/3);
+  const carousels: TCarousels = new Array(length);
+
+  for (let i = 0; i < length; i++) {
+    carousels[i] = {cssCarousel: "carousel-item", novels: []};
+  }
+
+  length = novels.length;
+
+  for (let i = 0; i < length; i++) {
+    novels[i].image = getImageUrl(novels[i].image);
+    novelTitle(novels[i]);
+    carousels[Math.floor(i/3)].novels.push(novels[i]);
+  }
+
+  carousels[0].cssCarousel = "carousel-item active";
+
+  return carousels;
+}
+
+const novelTitle = (novel: INovel): void => {
   novel.title = [novel.before, novel.name, novel.after].filter(Boolean).join(" ");
 }
 
-const propsShowNovels = (novels: TNovels, name: TShowNovelsName): void => {
+const getDescriptionNovels = (novels: TNovels): TNovels => {
   for (const novel of novels) {
     novel.image = getImageUrl(novel.image);
-    titleNovel(novel);
+    novelTitle(novel);
   }
 
-  descriptionNovelsData[name] = novels;
+  return novels;
 }
 
-const propsUpdatedNovels = (updatedNovelsList: TNovels): void => {
-  updatedNovelsListData = updatedNovelsList;
-  updatedNovelsListData.forEach(titleNovel);
-
+const getUpdatedNovelsList = (novels: TNovels): TNovels => {
+  let millisecondsDelta: number;
   const currentTime = new Date("2023-11-11T09:00:00Z");
+  let time: number;
 
-  for (const updatedNovel of updatedNovelsListData)
+  for (const novel of novels)
   {
-    let lastTime = new Date((updatedNovel as any).last_time);
-    let millisecondsDelta = currentTime.getTime() - lastTime.getTime();
-    let time = Math.floor(millisecondsDelta/86400000);
+    let lastTime = new Date((novel as any).last_time);
+    millisecondsDelta = currentTime.getTime() - lastTime.getTime();
+    time = Math.floor(millisecondsDelta/86400000);
 
     if (time > 0) {
-      updatedNovel.time = time + " ngày trước";
+      novel.time = time + " ngày trước";
     } else {
       time = Math.floor(millisecondsDelta/3600000);
 
       if (time > 0) {
-        updatedNovel.time = time + " giờ trước";
+        novel.time = time + " giờ trước";
       } else {
         time = Math.floor(millisecondsDelta/60000);
 
         if (time > 0) {
-          updatedNovel.time = time + " phút trước";
+          novel.time = time + " phút trước";
         } else {
-          updatedNovel.time = "mới cập nhật";
+          novel.time = "mới cập nhật";
         }
       }
     }
+
+    novelTitle(novel);
   }
+
+  return novels;
 }
 
-const propsLeftOfShortNovel = (leftOfShortNovel: SimpleNovels): void => {
-  leftOfShortNovelData = leftOfShortNovel;
+const getLeftOfShortNovel = (novel: SimpleNovel): SimpleNovel => {
+  novel.image = getImageUrl(novel.image);
 
-  leftOfShortNovelData.image = getImageUrl(leftOfShortNovelData.image);
+  return novel;
 }
 
-// propsFunction.suggestedNovels = propsSuggestedNovels;
-// propsFunction.selectedTranslationNovels = propsShowNovels;
-// propsFunction.updatedNovels = propsUpdatedNovels;
-// propsFunction.fullNovels = propsShowNovels;
-// propsFunction.leftOfShortNovel = propsLeftOfShortNovel;
-// propsFunction.rightOfShortNovels = propsRightOfShortNovels;
-
-export type {IShowNovels, TShowNovelsName, INovel};
-export {
-  carouselsData, 
-  descriptionNovelsData, 
-  updatedNovelsListData, 
-  leftOfShortNovelData, 
-  propsSuggestedNovels, 
-  propsShowNovels, 
-  propsUpdatedNovels, 
-  propsLeftOfShortNovel
-};
+export type {TCarousels, IShowNovels, TNovels, INovel};
+export {getCarousels, getDescriptionNovels, getUpdatedNovelsList, getLeftOfShortNovel};

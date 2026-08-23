@@ -1,32 +1,11 @@
+import {useState} from 'react';
+
 import loadSecretKey from '../../assets/wasm/SecretKey';
-import {propsSuggestedNovels, propsShowNovels, propsUpdatedNovels, propsLeftOfShortNovel} from 
-'../layouts/main-layout/Main/mainLogic';
-import {propsNovelsList} from '../layouts/main-layout/Aside/asideLogic';
-import {propsTrendNovelsInMonth} from '../layouts/main-layout/Footer/footerLogic';
-import {propsSimpleListOfNovels} from '../layouts/main-layout/shared/CommonLogic';
-
-let tempData: any = {};
-let lastUpdatedTime: any = {};
-
-let setLastUpdatedTime: any = {
-  suggestedNovels: "", selectedTranslationNovels: "", updatedNovels: "", fullNovels: "", leftOfShortNovel: "", rightOfShortNovels: "", 
-  reviewNovels: "", topGoodNovels: "", newUpdateNovels: "", trendNovelsInMonth: ""
-};
-
-const propsFunction: any = {
-  suggestedNovels: propsSuggestedNovels, 
-  selectedTranslationNovels: propsShowNovels, 
-  updatedNovels: propsUpdatedNovels, 
-  fullNovels: propsShowNovels, 
-  leftOfShortNovel: propsLeftOfShortNovel, 
-  rightOfShortNovels: propsSimpleListOfNovels, 
-  reviewNovels: propsSimpleListOfNovels, 
-  topGoodNovels: propsNovelsList, 
-  newUpdateNovels: propsNovelsList, 
-  trendNovelsInMonth: propsTrendNovelsInMonth
-};
 
 const secretKeyInstance: any = await loadSecretKey();
+let tempData: any = {};
+let lastUpdatedTime: any = {};
+const reRender: any = {};
 
 let count = 1;//create to check update data, it will be delete when app is deployed
 const requestData = () => {
@@ -51,8 +30,7 @@ const requestData = () => {
 
     for (let section in updatedTime) {
       if (updatedTime[section] !== lastUpdatedTime[section]) {
-        propsFunction[section](tempData[section], section);
-        setLastUpdatedTime[section]();
+        reRender[section]((prev: boolean) => !prev);
       }
     }
 
@@ -65,12 +43,21 @@ const getKey = (): string => {
   return secretKeyInstance.UTF8ToString(secretKeyInstance._createSecretKey());
 }
 
+const useUpdate = (name: string, getFunction: any): any => {
+  const data: any = structuredClone(tempData[name]);
+
+  [, reRender[name]] = useState(false);
+
+  return getFunction(data);
+}
+
 const getImageUrl = (imageName: string): string => {
   return `http://localhost:4000/assets/${imageName}?x-key=${getKey()}`;
 }
 
 {
   const request = new XMLHttpRequest();
+
   request.open("GET", "http://localhost:4000/data", false);
   request.setRequestHeader('x-key', getKey());
   request.send();
@@ -80,10 +67,6 @@ const getImageUrl = (imageName: string): string => {
 
   tempData = json.data;
 
-  for (let section in json.lastUpdatedTime) {
-    propsFunction[section](tempData[section], section);
-  }
-
   for (let section in json.lastUpdatedTime) {//create to check update data, it will be delete when app is deployed
     json.lastUpdatedTime[section] = json.lastUpdatedTime[section] + (++count);
   }
@@ -91,6 +74,6 @@ const getImageUrl = (imageName: string): string => {
   lastUpdatedTime = json.lastUpdatedTime;
 }
 
-setTimeout(requestData, 10000);
+setTimeout(requestData, 5000);
 
-export {tempData, setLastUpdatedTime, propsFunction, getImageUrl};
+export {useUpdate, getImageUrl};

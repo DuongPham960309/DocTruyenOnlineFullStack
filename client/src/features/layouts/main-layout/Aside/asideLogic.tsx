@@ -1,14 +1,4 @@
-import {propsFunction} from '../../../App/appLogic';
 import type {TTableRowOfList} from '../shared/CommonLogic';
-
-interface INovelsList {
-  sectionName: string,
-  nameUpdateTime: TRankListName
-}
-
-type TRankListName = keyof IRankListData;
-
-interface IRankListData {topGoodNovels: TNovels, newUpdateNovels: TNovels};
 
 type TNovels = INovel[];
 
@@ -77,9 +67,7 @@ const typeNovelsListData = [
   }
 }
 
-const rankListData = {topGoodNovels: {}, newUpdateNovels: {}} as IRankListData;
-
-const propsNovelsList = (novels: TNovels, name: TRankListName): void => {
+const getRankList = (novels: TNovels): TNovels => {
   const numberNovels = novels.length;
   const count = numberNovels.toString().length;
   let novel: INovel;
@@ -95,13 +83,9 @@ const propsNovelsList = (novels: TNovels, name: TRankListName): void => {
   novels[1].cssRank = "rank text-r-2";
   novels[2].cssRank = "rank text-r-3";
 
-  rankListData[name] = novels;
+  return novels;
 }
 
-// propsFunction.reviewNovels = propsReviewNovels;
-// propsFunction.topGoodNovels = propsNovelsList;
-// propsFunction.newUpdateNovels = propsNovelsList;
-
-export type {INovelsList, TRankListName};
-export {rankListData, propsNovelsList};
+export type {TNovels};
+export {getRankList};
 export default typeNovelsListData;

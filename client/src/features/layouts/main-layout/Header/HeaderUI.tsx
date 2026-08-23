@@ -1,6 +1,6 @@
 import {listOfTypeNovels, arrange} from './headerLogic';
-import type {TTableRowOfList} from '../shared/CommonLogic';
 import {TableOfList} from './../shared/CommonUI';
+import type {TTableRowOfList} from '../shared/CommonLogic';
 import logo from './assets/images/logo.png';
 
 const Header = () => {

@@ -1,9 +1,6 @@
-import {propsFunction} from '../../../App/appLogic';
-
+type TNovelNames = string[];
 type ParagraphText = (string | MarkerTitle)[];
 interface MarkerTitle {title: string, marker: string};
-
-let trendNovelsInMonthData: string[];
 
 const text1: ParagraphText = [
   "Website ", {title: "đọc truyện online", marker: "đọc truyện"}, " online chất lượng hàng đầu Việt Nam, với nhiều ", 
@@ -19,11 +16,9 @@ const text2: ParagraphText = [
   {title: "Privacy agreement", marker: "Thỏa thuận quyền riêng tư"}
 ];
 
-const propsTrendNovelsInMonth = (trendNovelsInMonth: string[]): void => {
-  trendNovelsInMonthData = trendNovelsInMonth;
+const getTrendNovelsInMonth = (novelNames: TNovelNames): TNovelNames => {
+  return novelNames;
 }
 
-// propsFunction.trendNovelsInMonth = propsTrendNovelsInMonth;
-
-export type {ParagraphText, MarkerTitle};
-export {trendNovelsInMonthData, text1, text2, propsTrendNovelsInMonth};
+export type {TNovelNames, ParagraphText, MarkerTitle};
+export {text1, text2, getTrendNovelsInMonth};

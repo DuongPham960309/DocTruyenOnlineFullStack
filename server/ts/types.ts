@@ -1,7 +1,8 @@
-type Home = {lastUpdatedTime: SectionsStringValue, data: SectionData};
+interface Home {lastUpdatedTime: SectionsStringValue, data: SectionData};
+
 type SectionsStringValue = Sections<string, string, string, string, string, string, string, string, string, string>;
 
-type Sections<
+interface Sections<
   _SuggestedNovels, 
   _SelectedTranslationNovels,
   _UpdatedNovels,
@@ -12,7 +13,7 @@ type Sections<
   _TopGoodNovels,
   _NewUpdateNovels,
   _TrendNovelsInMonth
-> = {
+> {
   suggestedNovels: _SuggestedNovels,
   selectedTranslationNovels: _SelectedTranslationNovels,
   updatedNovels: _UpdatedNovels,
@@ -26,10 +27,10 @@ type Sections<
 };
 
 type SectionData = Sections<
-  BasicNovelFormatArray,
-  BasicNovelFormatArray,
-  UpdatedNovelsFormatArray,
-  BasicNovelFormatArray,
+  FullNovelInfo,
+  FullNovelInfo,
+  NovelInfo,
+  FullNovelInfo,
   ShortNovelFormat,
   ShortNovelFormatArray,
   ShortNovelFormatArray,
@@ -38,11 +39,20 @@ type SectionData = Sections<
   string[]
 >;
 
-type BasicNovelFormatArray = {image: string, before: string, name: string, after: string, note: string, chapter: string, time: string}[];
+type FullNovelInfo = ({
+  image: string,
+  note: string,
+  time: string
+} & NovelInfo)[];
 
-type UpdatedNovelsFormatArray = {before: string, name: string, after: string, chapter: string};
+interface NovelInfo {
+  before: string, 
+  name: string, 
+  after: string, 
+  chapter: string
+};
 
-type ShortNovelFormat = {image: string, title: string};
+interface ShortNovelFormat {image: string, title: string};
 
 type ShortNovelFormatArray = ShortNovelFormat[];
 

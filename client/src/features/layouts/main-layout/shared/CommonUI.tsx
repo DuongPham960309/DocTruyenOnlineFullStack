@@ -1,5 +1,6 @@
-import type {TTableRowOfList, SimpleListName} from './CommonLogic';
-import {simpleNovelsData, useUpdate} from './CommonLogic';
+import {useUpdate} from '../../../App/appLogic';
+import type {TTableRowOfList, TSimpleNovels} from './CommonLogic';
+import {getSimpleListOfNovels} from './CommonLogic';
 
 const TableOfList = ({cssTable, rows}: {cssTable: string, rows: TTableRowOfList}) => {
   return <>
@@ -41,12 +42,12 @@ const More = ({title}: {title: string}) => {
   </>
 }
 
-const SimpleListOfNovels = ({nameUpdateTime, cssContainer}: {nameUpdateTime: SimpleListName, cssContainer: string}) => {
-  useUpdate(nameUpdateTime);
+const SimpleListOfNovels = ({nameUpdateTime, cssContainer}: {nameUpdateTime: string, cssContainer: string}) => {
+  const novels: TSimpleNovels = useUpdate(nameUpdateTime, getSimpleListOfNovels);
 
   return <>
     <div className="right-novel">
-      {simpleNovelsData[nameUpdateTime].map(novel =>
+      {novels.map(novel =>
         <div key={novel.title} className={cssContainer}>
           <img src={novel.image} alt="" title={novel.title} />
           <a className="text-dark hover-t-decoration" title={novel.title} href="#0">{novel.title}</a>

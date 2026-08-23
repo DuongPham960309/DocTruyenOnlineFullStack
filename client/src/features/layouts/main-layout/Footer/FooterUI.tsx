@@ -1,8 +1,8 @@
 import React from "react";
 
-import type {ParagraphText, MarkerTitle} from './footerLogic';
-import {trendNovelsInMonthData, text1, text2} from './footerLogic';
-import {useUpdate} from '../shared/CommonLogic';
+import {useUpdate} from '../../../App/appLogic';
+import type {TNovelNames, ParagraphText, MarkerTitle} from './footerLogic';
+import {text1, text2, getTrendNovelsInMonth} from './footerLogic';
 import dmca from './assets/images/dmca.png';
 import ccBy from './assets/images/ccBy.png';
 
@@ -42,10 +42,10 @@ const Footer = () => {
 }
 
 const TrendNovelsInMonth = () => {
-  useUpdate("trendNovelsInMonth");
+  const novelNames: TNovelNames = useUpdate("trendNovelsInMonth", getTrendNovelsInMonth);
 
   return <>
-    {trendNovelsInMonthData.map(novel => 
+    {novelNames.map(novel => 
       <a key={novel} className="d-inline-block top-novel hover-t-decoration" href="#0">{novel}</a>
     )}
   </>

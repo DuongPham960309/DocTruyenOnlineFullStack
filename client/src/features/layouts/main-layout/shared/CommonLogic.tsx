@@ -1,6 +1,4 @@
-import {useState, useEffect} from 'react';
-
-import {tempData, setLastUpdatedTime, getImageUrl} from '../../../App/appLogic';
+import {getImageUrl} from '../../../App/appLogic';
 
 type TTableRowOfList = {
   type: string, 
@@ -12,34 +10,25 @@ type TTableRowOfList = {
   cssType: string
 }[][];
 
-type SimpleListName = keyof ISimpleNovelsData;
+interface SectionDeclaration {
+  sectionName: string,
+  nameUpdateTime: string
+}
 
-interface ISimpleNovelsData {reviewNovels: TSimpleNovels, rightOfShortNovels: TSimpleNovels};
+type TSimpleNovels = SimpleNovel[];
 
-type TSimpleNovels = SimpleNovels[];
-
-interface SimpleNovels {
+interface SimpleNovel {
   title: string,
   image: string
 };
 
-const simpleNovelsData = {reviewNovels: {}, rightOfShortNovels: {}} as ISimpleNovelsData;
-
-const useUpdate = (name: string): void => {
-  const [, setChangeStatus] = useState(false);
-
-  useEffect(() => {
-    setLastUpdatedTime[name] = () => setChangeStatus(prev => !prev);
-  }, []);
-}
-
-const propsSimpleListOfNovels = (tempData: TSimpleNovels, name: SimpleListName): void => {
-  for (const novel of tempData) {
+const getSimpleListOfNovels = (novels: TSimpleNovels): TSimpleNovels => {
+  for (const novel of novels) {
     novel.image = getImageUrl(novel.image);
   }
 
-  simpleNovelsData[name] = tempData;
+  return novels;
 }
 
-export type {TTableRowOfList, SimpleListName, TSimpleNovels, SimpleNovels};
-export {simpleNovelsData, useUpdate, propsSimpleListOfNovels};
+export type {TTableRowOfList, SectionDeclaration, TSimpleNovels, SimpleNovel};
+export {getSimpleListOfNovels};

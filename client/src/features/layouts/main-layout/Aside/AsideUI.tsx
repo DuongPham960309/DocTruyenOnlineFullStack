@@ -1,7 +1,8 @@
-import type {INovelsList, TRankListName} from './asideLogic';
-import typeNovelsListData, {rankListData} from './asideLogic';
+import {useUpdate} from '../../../App/appLogic';
+import type {TNovels} from './asideLogic';
+import typeNovelsListData, {getRankList} from './asideLogic';
 import {TitleSection, TableOfList, SimpleListOfNovels, More} from '../shared/CommonUI';
-import {useUpdate} from '../shared/CommonLogic';
+import type {SectionDeclaration} from '../shared/CommonLogic';
 
 const Aside = () => {
   return <>
@@ -37,7 +38,7 @@ const ReviewNovels = () => {
   </>
 }
 
-const NovelsList = ({sectionName, nameUpdateTime}: INovelsList) => {
+const NovelsList = ({sectionName, nameUpdateTime}: SectionDeclaration) => {
   return <>
     <section className="bg-white">
       <TitleSection title={sectionName} />
@@ -51,11 +52,11 @@ const NovelsList = ({sectionName, nameUpdateTime}: INovelsList) => {
   </>
 }
 
-const RankList = ({nameUpdateTime}: {nameUpdateTime: TRankListName}) => {
-  useUpdate(nameUpdateTime);
+const RankList = ({nameUpdateTime}: {nameUpdateTime: string}) => {
+  const novels: TNovels = useUpdate(nameUpdateTime, getRankList);
 
   return <>
-    {rankListData[nameUpdateTime].map(novel =>
+    {novels.map(novel =>
       <tr key={novel.title}>
         <td className={novel.cssRank}>{novel.rank}</td>
         <td>
