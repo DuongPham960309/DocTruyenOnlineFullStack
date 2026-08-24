@@ -44,6 +44,10 @@ const getKey = (): string => {
 }
 
 const useUpdate = (name: string, getFunction: any): any => {
+  // Không xóa dòng: const data: any = structuredClone(tempData[name]); (deep copy)
+  // React (development) dùng Strict Mode nên sẽ render 2 lần.
+  // Nếu tham chiếu đến 1 vùng dữ liệu và sửa dữ liệu đó 2 lần có thể gây ra lỗi.
+  // Ví dụ: a = 0; a = a + 1; => a = 2, thực tế a = 3.
   const data: any = structuredClone(tempData[name]);
 
   [, reRender[name]] = useState(false);
