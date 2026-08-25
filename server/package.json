@@ -6,10 +6,10 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node compiled-js/server.js",
-    "dev-env": "cross-env NODE_ENV=development node -r dotenv/config compiled-js/server.js dotenv_config_path=env/.env.development",
+    "start": "node dist/server.js",
+    "dev-env": "cross-env NODE_ENV=development node -r dotenv/config dist/server.js dotenv_config_path=env/.env.development",
     "dev": "npx tsc && npm run dev-env",
-    "prod": "cross-env NODE_ENV=production node -r dotenv/config compiled-js/server.js dotenv_config_path=env/.env.production"
+    "prod": "cross-env NODE_ENV=production node -r dotenv/config dist/server.js dotenv_config_path=env/.env.production"
   },
   "keywords": [],
   "author": "",
