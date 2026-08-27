@@ -1,7 +1,7 @@
 import type {Request, Response, NextFunction} from 'express';
 import crypto from 'crypto';
 
-const verifyRequest = (request: Request, response: Response, next: NextFunction) => {
+const verifyRequest = (request: Request, response: Response, next: NextFunction): void => {
   const serverTime = Date.now();
 
   const xKey = (request.get('x-key') || request.query['x-key']) as string;

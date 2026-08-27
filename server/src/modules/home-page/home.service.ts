@@ -79,7 +79,7 @@ const queryString: SectionsStringValue = {
 
 const sectionNames = Object.keys(queryString) as (keyof SectionsStringValue)[];
 
-const getHomePageData = async () => {
+const getHomePageData = async (): Promise<Home> => {
   const queriedData = {lastUpdatedTime: {}, data: {}} as Home;
   const data = queriedData.data;
 
@@ -92,7 +92,7 @@ const getHomePageData = async () => {
   return queriedData;
 }
 
-const getLastUpdatedTime = async (lastUpdatedTime: SectionsStringValue) => {
+const getLastUpdatedTime = async (lastUpdatedTime: SectionsStringValue): Promise<void> => {
   try {
     const [rows] = (await pool.query(`SELECT * FROM last_updated_time`)) as unknown as [
       {section: keyof SectionsStringValue, time: string}[]
@@ -114,7 +114,7 @@ const queryOfGetMethod = async <SectionName extends keyof SectionData>(data: Sec
   }
 }
 
-const postHomePageData = async (updatedTime: SectionsStringValue) => {
+const postHomePageData = async (updatedTime: SectionsStringValue): Promise<Home> => {
   const queriedData = {lastUpdatedTime: {}, data: {}} as Home;
   const data = queriedData.data;
   let lastUpdatedTime = queriedData.lastUpdatedTime;
@@ -129,6 +129,8 @@ const postHomePageData = async (updatedTime: SectionsStringValue) => {
   if (updatedTime.trendNovelsInMonth !== lastUpdatedTime.trendNovelsInMonth) {
     data.trendNovelsInMonth = (data.trendNovelsInMonth as unknown as {name: string}[]).map(row => row.name);
   }
+
+  return queriedData;
 }
 
 const queryOfPostMethod = async <SectionName extends keyof SectionsStringValue>(
