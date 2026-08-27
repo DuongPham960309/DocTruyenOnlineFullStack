@@ -1,0 +1,72 @@
+aside {
+  .type-novel {
+    td {
+      border-width: 0;
+    }
+  }
+
+  .review-novel {
+    .p-short-novel {
+      padding: 10px;
+    }
+
+    img {
+      width: 48px;
+      height: auto;
+      margin-right: 10px;
+    }
+
+    a {
+      display: -webkit-box;
+      overflow: hidden;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      font-size: 14px;
+    }
+  }
+
+  .top-list {
+    .rank {
+      text-align: center;
+      vertical-align: middle;
+      font-size: 25px;
+      font-weight: 300;
+      width: 50px;
+    }
+
+    .text-r-1 {
+      color: red;
+    }
+
+    .text-r-2 {
+      color: #3a833c;
+    }
+
+    .text-r-3 {
+      color: #8f6b00;
+    }
+
+    .text-under-r-3 {
+      color: #2980b9;
+    }
+
+    td {
+      border-style: dashed;
+      vertical-align: middle;
+      padding: 2px 0 5px;
+
+      a {
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .view {
+        font-size: 12px;
+
+        i {
+          padding-right: 3px;
+        }
+      }
+    }
+  }
+}

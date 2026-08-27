@@ -1,0 +1,36 @@
+main {
+  section {
+    .grid-novel {
+      $gap: 10px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: $gap;
+      padding: $gap;
+
+      img {
+        width: 100%;
+        height: auto;
+      }
+
+      a {
+        line-height: 1.25;
+        font-size: 14px;
+      }
+
+      p {
+        font-size: 13px;
+      }
+
+      .bg-black-opacity {
+        background-color: rgba(0, 0, 0, 0.8);
+      }
+    }
+
+    .size-icon {
+      font-size: 70px;
+    }
+
+    .p-above {
+      padding: 5px 10px;
+    }
+  }
+}

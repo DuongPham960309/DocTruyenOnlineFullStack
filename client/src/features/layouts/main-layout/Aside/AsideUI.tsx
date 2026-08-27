@@ -1,4 +1,5 @@
 import {useUpdate} from '../../../App/appLogic';
+import './aside.scss';
 import type {TNovels} from './asideLogic';
 import typeNovelsListData, {getRankList} from './asideLogic';
 import {TitleSection, TableOfList, SimpleListOfNovels, More} from '../shared/CommonUI';

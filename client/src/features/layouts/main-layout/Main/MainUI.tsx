@@ -1,4 +1,5 @@
 import {useUpdate} from '../../../App/appLogic';
+import './main.scss';
 import type {TCarousels, IShowNovels, TNovels, INovel} from './mainLogic';
 import {getCarousels, getDescriptionNovels, getUpdatedNovelsList, getLeftOfShortNovel} from './mainLogic';
 import {TitleSection, More, SimpleListOfNovels} from '../shared/CommonUI';
