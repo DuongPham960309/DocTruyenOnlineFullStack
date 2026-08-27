@@ -1,6 +1,7 @@
 import React from "react";
 
 import {useUpdate} from '../../../App/appLogic';
+import './footer.scss';
 import type {TNovelNames, ParagraphText, MarkerTitle} from './footerLogic';
 import {text1, text2, getTrendNovelsInMonth} from './footerLogic';
 import dmca from './assets/images/dmca.png';

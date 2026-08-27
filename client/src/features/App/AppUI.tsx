@@ -2,8 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'font-awesome/css/font-awesome.min.css';
 
-// import './../../App.css';
-import './App.scss';
+import './app.scss';
 import './appLogic';
 import Header from '../layouts/main-layout/Header/HeaderUI';
 import Main from '../layouts/main-layout/Main/MainUI';

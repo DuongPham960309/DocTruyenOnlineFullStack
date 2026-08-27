@@ -1,3 +1,4 @@
+import './header.scss';
 import {listOfTypeNovels, arrange} from './headerLogic';
 import {TableOfList} from './../shared/CommonUI';
 import type {TTableRowOfList} from '../shared/CommonLogic';
@@ -52,7 +53,7 @@ const UpLoad = () => {
 
 const Search = () => {
   return <>
-    <form className="d-flex  p-item-main col" action="">
+    <form className="d-flex p-item-main col" action="">
       <input className="d-block col" type="text" placeholder="Tìm truyện, tác giả..." />
       <button className="d-block ml-sub-item" type="button">
         <i className="d-block fa fa-search"></i>

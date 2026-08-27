@@ -1,0 +1,95 @@
+.header {
+  background-color: #2C7ABE;
+
+  nav {
+    .mx-nav-negative {
+      margin-left: -12px;
+      margin-right: -12px;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .img {
+      $size: 35px;
+      width: $size;
+      height: $size;
+      margin-right: 5px;
+    }
+
+    h1 {
+      font-size: 18px;
+      margin: 0;
+    }
+
+    .title-main-hover:hover h1 * {
+      text-decoration: underline;
+    }
+
+    .item-main-hover:hover {
+      text-decoration: underline;
+    }
+
+    table {
+      display: none;
+      z-index: 1;
+    }
+
+    input {
+      height: 35px;
+      border: 0;
+      border-radius: 1px;
+    }
+
+    button {
+      width: 35px;
+      height: 35px;
+      border: 0;
+      border-radius: 1px;
+    }
+
+    .p-item-main {
+      padding: 7px 12px;
+    }
+
+    .ml-sub-item {
+      margin-left: 3px;
+    }
+
+    .color-main-list {
+      color: white;
+    }
+
+    
+    .w-table {
+      width: 310px;
+    }
+
+    .hover-show {
+      &:hover table {
+        display: table;
+      }
+    }
+
+    .bg-upload {
+      background-color: red;
+    }
+
+    .item {
+      color: black;
+    }
+
+    .item-sub-hover:hover {
+      background-color: rgb(235, 235, 235);
+    }
+
+    .log-in-hover:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+  }
+}
