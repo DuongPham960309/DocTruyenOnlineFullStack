@@ -9,7 +9,7 @@ import Main from '../layouts/main-layout/Main/MainUI';
 import Aside from '../layouts/main-layout/Aside/AsideUI';
 import Footer from '../layouts/main-layout/Footer/FooterUI';
 
-function App() {
+const App = () => {
   return <>
     <Header />
     <div className="content">
