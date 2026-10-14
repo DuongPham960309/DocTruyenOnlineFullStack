@@ -2,6 +2,8 @@ import {useState} from 'react';
 
 import loadSecretKey from '../../assets/wasm/SecretKey';
 
+const serverUrl = process.env.REACT_APP_SERVER_URL as string;
+
 const secretKeyInstance: any = await loadSecretKey();
 let tempData: any = {};
 let lastUpdatedTime: any = {};
@@ -9,7 +11,7 @@ const reRender: any = {};
 
 let count = 1;//create to check update data, it will be delete when app is deployed
 const requestData = () => {
-  fetch("http://localhost:4000/data", {
+  fetch(`${serverUrl}/data`, {
     method:'POST',
     headers: {
       'Accept': 'application/json',
@@ -56,13 +58,13 @@ const useUpdate = (name: string, getFunction: any): any => {
 }
 
 const getImageUrl = (imageName: string): string => {
-  return `http://localhost:4000/assets/${imageName}?x-key=${getKey()}`;
+  return `${serverUrl}/assets/${imageName}?x-key=${getKey()}`;
 }
 
 {
   const request = new XMLHttpRequest();
 
-  request.open("GET", "http://localhost:4000/data", false);
+  request.open("GET", `${serverUrl}/data`, false);
   request.setRequestHeader('x-key', getKey());
   request.send();
 

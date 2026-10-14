@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import env from './config/env.js';
 import rateLimit from 'express-rate-limit';
 import path from 'path';
 
@@ -10,7 +11,7 @@ const app = express();
 app.set('trust proxy', 1);
 
 app.use(cors({
-  origin: "http://localhost:3000"
+  origin: env.CLIENT_URL
 }));
 
 app.use(verifyRequest);
