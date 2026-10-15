@@ -2,8 +2,8 @@ import 'dotenv/config';
 
 const env = process.env as unknown as {
   CLIENT_URL: string,
-  SERVER_HOST: string,
-  SERVER_PORT: number,
+  HOST: string,
+  PORT: number,
   MYSQL_HOST: string,
   MYSQL_PORT: number,
   MYSQL_USER: string,
@@ -11,7 +11,7 @@ const env = process.env as unknown as {
   MYSQL_DATABASE: string
 };
 
-env.SERVER_PORT = Number(env.SERVER_PORT);
+env.PORT = Number(env.PORT);
 env.MYSQL_PORT = Number(env.MYSQL_PORT);
 
 export default env;
