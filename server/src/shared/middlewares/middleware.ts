@@ -3,8 +3,14 @@ import crypto from 'crypto';
 
 const verifyRequest = (request: Request, response: Response, next: NextFunction): void => {
   const serverTime = Date.now();
+  const xKeyLength = 80;
 
   const xKey = (request.get('x-key') || request.query['x-key']) as string;
+
+  if ((typeof xKey !== 'string') || (xKey.length !== xKeyLength)) {
+    response.status(401).json({message: 'Unauthorized'});
+  }
+
   const [clientSignature, clientTime] = getClientSignatureAndTimeMS(xKey);
   
   const timeDifference = Math.abs(serverTime - clientTime);
@@ -14,7 +20,7 @@ const verifyRequest = (request: Request, response: Response, next: NextFunction)
     .update(clientTime + "|ConstantString")
     .digest('hex');
 
-  if ((timeDifference < 10*1000)&&(serverSignature === clientSignature)) {
+  if ((timeDifference < 10*1000) && (serverSignature === clientSignature)) {
     next();
   } else {
     response.send();
