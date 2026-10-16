@@ -8,9 +8,7 @@ const verifyRequest = (request: Request, response: Response, next: NextFunction)
   const xKey = (request.get('x-key') || request.query['x-key']) as string;
 
   if ((typeof xKey !== 'string') || (xKey.length !== xKeyLength)) {
-    // response.status(401).json({message: 'Unauthorized'});
     response.send();
-    return;
   }
 
   const [clientSignature, clientTime] = getClientSignatureAndTimeMS(xKey);

@@ -1,7 +1,7 @@
 import 'dotenv/config';
 
 const env = process.env as unknown as {
-  CLIENT_URL: string,
+  CLIENT_ORIGIN: string,
   HOST: string,
   PORT: number,
   MYSQL_HOST: string,
