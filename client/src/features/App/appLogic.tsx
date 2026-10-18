@@ -82,4 +82,5 @@ const getImageUrl = (imageName: string): string => {
 
 setTimeout(requestData, 5000);
 
+
 export {useUpdate, getImageUrl};
