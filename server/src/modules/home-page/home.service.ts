@@ -80,16 +80,16 @@ const queryString: SectionsStringValue = {
 const sectionNames = Object.keys(queryString) as (keyof SectionsStringValue)[];
 
 const getHomePageData = async (): Promise<Home> => {
-  const responsePayload = {lastUpdatedTime: {}, data: {}} as Home;
-  const data = responsePayload.data;
+  const lastUpdatedTime = {} as SectionsStringValue;
+  const data = {} as SectionData;
 
-  await fetchLastUpdatedTime(responsePayload.lastUpdatedTime);
+  await fetchLastUpdatedTime(lastUpdatedTime);
   await Promise.all(sectionNames.map(sectionName => fetchSectionData(data, sectionName)));
 
   data.leftOfShortNovel = (data.leftOfShortNovel as unknown as [ShortNovelFormat])[0];
   data.trendNovelsInMonth = (data.trendNovelsInMonth as unknown as {name: string}[]).map(row => row.name);
 
-  return responsePayload;
+  return {lastUpdatedTime: lastUpdatedTime, data: data};
 }
 
 const fetchLastUpdatedTime = async (lastUpdatedTime: SectionsStringValue): Promise<void> => {
