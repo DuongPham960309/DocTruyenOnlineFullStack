@@ -119,7 +119,7 @@ const postHomePageData = async (updatedTime: SectionsStringValue): Promise<Home>
   const data = responsePayload.data;
   let lastUpdatedTime = responsePayload.lastUpdatedTime;
 
-  await fetchLastUpdatedTime(responsePayload.lastUpdatedTime);
+  await fetchLastUpdatedTime(lastUpdatedTime);
   await Promise.allSettled(sectionNames.map(sectionName => fetchSectionDataConditional(updatedTime, sectionName, responsePayload)));
 
   if (updatedTime.leftOfShortNovel !== lastUpdatedTime.leftOfShortNovel) {
@@ -134,14 +134,14 @@ const postHomePageData = async (updatedTime: SectionsStringValue): Promise<Home>
 }
 
 const fetchSectionDataConditional = async <SectionName extends keyof SectionsStringValue>(
-  updatedTime: SectionsStringValue, property: SectionName, queriedData: Home
+  updatedTime: SectionsStringValue, property: SectionName, responsePayload: Home
 ) => {
-  if (updatedTime[property] !== queriedData.lastUpdatedTime[property]) {
+  if (updatedTime[property] !== responsePayload.lastUpdatedTime[property]) {
     try {
-      [queriedData.data[property]] = (await pool.query(queryString[property])) as unknown as [SectionData[SectionName]];
+      [responsePayload.data[property]] = (await pool.query(queryString[property])) as unknown as [SectionData[SectionName]];
     } catch (error) {
       console.error(`\x1b[31m ${property}: ${error}\x1b[0m`);
-      queriedData.lastUpdatedTime[property] = updatedTime[property];
+      responsePayload.lastUpdatedTime[property] = updatedTime[property];
     }
   }
 }
