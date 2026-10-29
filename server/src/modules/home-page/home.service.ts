@@ -80,16 +80,16 @@ const queryString: SectionsStringValue = {
 const sectionNames = Object.keys(queryString) as (keyof SectionsStringValue)[];
 
 const getHomePageData = async (): Promise<Home> => {
-  const queriedData = {lastUpdatedTime: {}, data: {}} as Home;
-  const data = queriedData.data;
+  const responsePayload = {lastUpdatedTime: {}, data: {}} as Home;
+  const data = responsePayload.data;
 
-  await getLastUpdatedTime(queriedData.lastUpdatedTime);
+  await getLastUpdatedTime(responsePayload.lastUpdatedTime);
   await Promise.all(sectionNames.map(sectionName => queryOfGetMethod(data, sectionName)));
 
   data.leftOfShortNovel = (data.leftOfShortNovel as unknown as [ShortNovelFormat])[0];
   data.trendNovelsInMonth = (data.trendNovelsInMonth as unknown as {name: string}[]).map(row => row.name);
 
-  return queriedData;
+  return responsePayload;
 }
 
 const getLastUpdatedTime = async (lastUpdatedTime: SectionsStringValue): Promise<void> => {
@@ -115,12 +115,12 @@ const queryOfGetMethod = async <SectionName extends keyof SectionData>(data: Sec
 }
 
 const postHomePageData = async (updatedTime: SectionsStringValue): Promise<Home> => {
-  const queriedData = {lastUpdatedTime: {}, data: {}} as Home;
-  const data = queriedData.data;
-  let lastUpdatedTime = queriedData.lastUpdatedTime;
+  const responsePayload = {lastUpdatedTime: {}, data: {}} as Home;
+  const data = responsePayload.data;
+  let lastUpdatedTime = responsePayload.lastUpdatedTime;
 
-  await getLastUpdatedTime(queriedData.lastUpdatedTime);
-  await Promise.allSettled(sectionNames.map(sectionName => queryOfPostMethod(updatedTime, sectionName, queriedData)));
+  await getLastUpdatedTime(responsePayload.lastUpdatedTime);
+  await Promise.allSettled(sectionNames.map(sectionName => queryOfPostMethod(updatedTime, sectionName, responsePayload)));
 
   if (updatedTime.leftOfShortNovel !== lastUpdatedTime.leftOfShortNovel) {
     data.leftOfShortNovel = (data.leftOfShortNovel as unknown as [ShortNovelFormat])[0];
@@ -130,7 +130,7 @@ const postHomePageData = async (updatedTime: SectionsStringValue): Promise<Home>
     data.trendNovelsInMonth = (data.trendNovelsInMonth as unknown as {name: string}[]).map(row => row.name);
   }
 
-  return queriedData;
+  return responsePayload;
 }
 
 const queryOfPostMethod = async <SectionName extends keyof SectionsStringValue>(
